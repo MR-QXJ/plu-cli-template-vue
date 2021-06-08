@@ -1,0 +1,16 @@
+{
+  "id": "2543134",
+  "name": "电缆",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "18592598",
+      "name": "menu-fold",
+      "font_class": "menu-fold",
+      "unicode": "e6a8",
+      "unicode_decimal": 59048
+    }
+  ]
+}
