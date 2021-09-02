@@ -92,10 +92,10 @@ export default {
 
       .content-bg {
         @include bg("notfound/content.png", 0, 0);
-        @include flex;
-        @include flex-column;
-        @include flex-primary-axis-center;
-        @include flex-secondary-axis-center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         background-size: 796px 100%;
         left: 0;
         position: absolute;

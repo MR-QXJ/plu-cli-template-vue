@@ -2,9 +2,8 @@
  * 全局变量类
  */
 
-// 1、版本标记
-// 接口地址 1：mock 2：本地服务器 3：测试服务器 4：正式服务器 5：测试服务器（运维录入数据）
-export const apiEnv = 3;
+// 1、请求根路径
+export const URL = process.env.VUE_APP_API;
 
 // 2、浏览器
 // 浏览器信息

@@ -17,7 +17,7 @@ Vue.use(Vuex);
 // 系统信息
 const _sys = {
   // 系统名称
-  sysName: "和航科技办公业务系统"
+  sysName: "vue项目基础模板"
 };
 
 const state = {

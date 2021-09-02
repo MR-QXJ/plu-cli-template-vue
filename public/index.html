@@ -81,13 +81,13 @@
         -moz-justify-content: center;
         justify-content: center;
       }
-      .enter .enterLogo {
+      /* .enter .enterLogo {
         float: left;
         background: url(./assets/imgs/logo/logo-company-name-small.png)
           no-repeat 0 center;
         height: 46px;
         width: 176px;
-      }
+      } */
       .enter .loading {
         color: #005097;
         float: left;
@@ -230,19 +230,15 @@
       .noteCompatibilityA:hover span {
         background-color: #67c6f2;
       }
-      .noteCompatibilityLogo {
+      /* .noteCompatibilityLogo {
         background: url(./assets/imgs/logo/logo-company-name-small.png)
           no-repeat center 0;
         height: 23px;
         width: 100%;
-      }
-      .anchorBL {
-        display: none;
-      }
+      } */
     </style>
   </head>
   <body>
-    <!-- <script type="text/javascript" color="177,197,212" opacity='1' zIndex="1" count="99" src="<%= BASE_URL %>assets/js/canvas-nest.js"></script> -->
     <noscript>
       <div class="noteNoJS">
         <span
@@ -300,7 +296,7 @@
             <span>火狐 Firefox</span>
           </a>
         </div>
-        <div class="noteCompatibilityLogo"></div>
+        <!-- <div class="noteCompatibilityLogo"></div> -->
       </div>
     </div>
     <script>
@@ -325,12 +321,5 @@
     
     <script type="text/javascript" src="<%= BASE_URL %>assets/js/threeparty/echarts/echarts.min.js"></script>
     <script type="text/javascript" src="<%= BASE_URL %>assets/js/threeparty/echarts/js2wordcloud.min.js"></script>
-    <!-- <script type="text/javascript" src="<%= BASE_URL %>assets/js/verification/index.min.js?timestamp=20200812"></script> -->
-    <!-- <script type="text/javascript" src="http://iclient.supermap.io/libs/iclient8c/libs/SuperMap.Include.js"></script>
-    <script type="text/javascript" src="<%= BASE_URL %>assets/js/threeparty/supermap/libs/iclient8c/js/MapToImg.js"></script> -->
-    <script src="https://lbs.sgmap.cn/api/epgis-js-1.5.0.min.js"></script>
-
-    <!-- dev -->
-    <!-- <script type="text/javascript" src="<%= BASE_URL %>assets/js/echarts/echarts.min.js"></script> -->
   </body>
 </html>

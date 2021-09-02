@@ -59,7 +59,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../src/assets/font/iconfont.css";
 @include html-font-size();
 @include common;
 @include a-common;
@@ -176,52 +175,6 @@ iframe::-webkit-scrollbar-thumb {
 .ant-select-dropdown-menu {
   max-height: 260px;
 }
-//antd导航菜单hover
-// .ant-menu-item.ant-menu-item-active {
-//   color: white;
-// }
-// .ant-menu-inline-collapsed > .ant-menu-item,
-// .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
-//   padding: 0 20px !important;
-// }
-
-// antd导航菜单
-// .ant-menu-inline,
-// .ant-menu-vertical,
-// .ant-menu-vertical-left {
-//   border-right-width: 0;
-
-//   // 未收缩当前菜单（没有子菜单）
-//   .ant-menu-item-selected {
-//     color: $color-white;
-//   }
-// }
-// // 当前菜单箭头
-// .ant-menu-vertical .ant-menu-item:after,
-// .ant-menu-vertical-left .ant-menu-item:after,
-// .ant-menu-vertical-right .ant-menu-item:after,
-// .ant-menu-inline .ant-menu-item:after {
-//   bottom: 50%;
-//   display: block;
-//   border: solid 13px $color-background;
-//   border-top-width: 10px;
-//   border-bottom-width: 10px;
-//   border-top-color: transparent;
-//   border-bottom-color: transparent;
-//   border-left-color: transparent;
-//   height: 0;
-//   margin-top: -10px;
-//   top: 50%;
-//   width: 0;
-// }
-// // 收缩当前菜单父菜单背景色
-// .ant-menu-inline-collapsed {
-//   .ant-menu-submenu-selected {
-//     .ant-menu-submenu-title {
-//       background-color: #318db3;
-//     }
-//   }
-// }
 // antd输入框
 .ant-input-group-addon {
   border-width: 0;
@@ -275,7 +228,7 @@ iframe::-webkit-scrollbar-thumb {
     "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
 }
 .ant-input-pass:-ms-input-placeholder,
-.ant-input-group-pass .ant-input:-ms-input-placeholder {
+.ant-input-group-pass .ant-input::-ms-input-placeholder {
   font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica,
     "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
 }
@@ -286,7 +239,7 @@ iframe::-webkit-scrollbar-thumb {
 // antd表单查询无验证
 .ant-form-search-noverification {
   .ant-form-item {
-    @include flex;
+    display: flex;
     margin-bottom: 13px;
   }
   .ant-form-item-control-wrapper {
@@ -296,166 +249,5 @@ iframe::-webkit-scrollbar-thumb {
 //antd弹窗
 .ant-modal {
   transition: width 0.3s, height 0.25s;
-}
-
-// 思极地图隐藏logo
-.epgis-logo,
-.epgis-attribution {
-  visibility: hidden;
-}
-// 思极地图隐藏logo比例尺位置
-.epgis-ctrl-scale2 {
-  left: 5px;
-}
-
-//超图撒点弹窗
-.smPopupContent {
-  padding: 0 !important;
-  .supermap-infowindow-content {
-    background-color: $color-white;
-    border-radius: 5px;
-    cursor: default;
-    height: 100%;
-    width: 100%;
-    .row {
-      @include flex;
-      line-height: 25px;
-      max-width: 200px;
-      padding: 0 10px;
-      &.head {
-        @include flex;
-        @include flex-primary-axis-center;
-        @include flex-secondary-axis-center;
-        background: #5b6996;
-        line-height: 30px;
-        padding: 0 20px;
-        span {
-          text-align: center;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          color: white;
-        }
-        .icon-more {
-          width: 15px;
-          height: 15px;
-          background: url("./assets/imgs/pub/bars.png") 0 0 no-repeat;
-          background-size: 100%;
-          position: absolute;
-          right: 2px;
-          &:hover {
-            cursor: pointer;
-          }
-        }
-      }
-      &.bottom {
-        line-height: normal;
-        padding: 10px 0;
-        @include flex;
-        @include flex-primary-axis-center;
-        color: #43cdd3;
-        &:hover {
-          cursor: pointer;
-        }
-      }
-
-      span {
-        @include text-ellipsis;
-        color: $color-font2;
-        display: block;
-        flex-shrink: 1;
-        font-size: 12px;
-        width: 100%;
-
-        &.title {
-          color: $color-font1;
-          flex-shrink: 0;
-          text-align: right;
-          width: auto;
-        }
-      }
-    }
-    .close {
-      display: block;
-      position: absolute;
-      right: 6px;
-      top: 6px;
-      z-index: 1;
-
-      .icon {
-        color: #72a9e4;
-        font-weight: bold;
-      }
-    }
-  }
-}
-// 超图文字编辑框
-.supermap-textedit-content {
-  background-color: $color-white;
-  cursor: default;
-  padding: 8px 16px 8px 8px;
-  position: relative;
-
-  input {
-    border: solid 1px #bdc4ca;
-    border-radius: 3px;
-    height: 30px;
-    padding: 0 4px;
-    width: 200px;
-  }
-  .close {
-    display: block;
-    position: absolute;
-    right: 6px;
-    top: 6px;
-    z-index: 1;
-
-    .icon {
-      color: #666;
-      font-size: 16px;
-      font-weight: bold;
-    }
-  }
-}
-// 超图截图预览
-.supermap-screenshot-preview {
-  .preview-tool {
-    @include flex;
-    background-color: $color-white;
-    border: solid 1px $color-font3;
-    border-radius: 3px;
-    height: 30px;
-    overflow: hidden;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    z-index: 1;
-
-    .button {
-      background-color: $color-white;
-      border-right: dashed 1px $color-font3;
-      color: $color-font2;
-      display: block;
-      flex-shrink: 0;
-      font-size: 14px;
-      height: 30px;
-      line-height: 30px;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      width: 50px;
-
-      input {
-        background-color: rgba(0, 0, 0, 0);
-        border: none;
-      }
-    }
-    .button:last-child {
-      border-right-width: 0;
-    }
-    .button:hover {
-      background-color: #eaeaea;
-    }
-  }
 }
 </style>

@@ -15,12 +15,10 @@ function resolve(dir) {
 const cdn = {
   externals: {
     echarts: "echarts",
-    "ant-design-vue": "AntDesignVue",
     vue: "Vue",
     "vue-router": "VueRouter",
     vuex: "Vuex",
-    axios: "axios",
-    MapToImg: "MapToImg"
+    axios: "axios"
   },
   // cdn的css链接
   css: [],
@@ -40,7 +38,7 @@ module.exports = {
   // 基础路径
   publicPath: "./",
   // 输出目录
-  outputDir: "dist",
+  outputDir: process.env.outputDir || "dist",
   // 资源目录
   assetsDir: "static",
   productionSourceMap: false,
@@ -48,8 +46,9 @@ module.exports = {
   chainWebpack: config => {
     // 目录命名
     config.resolve.alias
-      .set("@$", resolve("src"))
+      .set("@", resolve("src"))
       .set("assets", resolve("src/assets"))
+      .set("network", resolve("src/network"))
       .set("components", resolve("src/components"))
       .set("utils", resolve("src/utils"));
 
@@ -58,13 +57,6 @@ module.exports = {
       if (isProduction || devNeedCdn) args[0].cdn = cdn;
       return args;
     });
-
-    // config.module
-    //   .rule("@ant-design/icons")
-    //   .include.add(require.resolve("@ant-design/icons/lib/dist"))
-    //   .end()
-    //   .use("ant-icon")
-    //   .loader("webpack-ant-icon-loader");
   },
   configureWebpack: config => {
     // moment压缩
@@ -147,19 +139,16 @@ module.exports = {
     port: 8892,
     // 代理
     proxy: {
-      "/dlaqyjfkapi": {
+      "/api": {
         // 本地测试
         target: "http://183.230.162.215:9527",
-        // 外网测试环境
-        // target: "http://183.230.162.215:8200",
         ws: true,
         changeOrigin: true,
         pathRewrite: {
           // 本地测试
-          "^/dlaqyjfkapi": "/"
+          "^/api": "/"
         }
       }
     }
-  },
-  lintOnSave: false
+  }
 };
