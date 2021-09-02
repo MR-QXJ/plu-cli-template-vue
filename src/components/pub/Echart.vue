@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import { initEchart, debounce } from "utils/echart";
+import { initEchart } from "utils/echart";
+import { debounce } from "utils/tools/common";
 
 export default {
   props: {

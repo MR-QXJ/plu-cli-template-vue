@@ -260,3 +260,20 @@ export function paramsSerializer(name, params, type = 1) {
     }
   }
 }
+
+/**
+ * @desc 防抖函数,立即执行func,wait指定时间内调用不会再触发func而重新计时
+ * @param func 目标函数
+ * @param wait 延时
+ */
+export function debounce(func, wait) {
+  let timer;
+  return function() {
+    if (timer) clearTimeout(timer);
+    else func.apply(this, arguments);
+    timer = setTimeout(() => {
+      timer = null;
+      func.apply(this, arguments);
+    }, wait);
+  };
+}
