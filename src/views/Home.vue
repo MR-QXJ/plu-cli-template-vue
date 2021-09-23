@@ -1,6 +1,6 @@
 <template>
   <div class="h100 w100 home">
-    欢迎来到<span class="title">Plu-Cli！！</span>
+    欢迎来到<span class="title">He-Cli！！</span>
   </div>
 </template>
 
