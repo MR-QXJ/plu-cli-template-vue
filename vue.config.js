@@ -49,6 +49,7 @@ module.exports = {
       .set("@", resolve("src"))
       .set("assets", resolve("src/assets"))
       .set("network", resolve("src/network"))
+      .set("request", resolve("src/network/request"))
       .set("components", resolve("src/components"))
       .set("utils", resolve("src/utils"));
 
