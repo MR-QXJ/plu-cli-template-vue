@@ -1,12 +1,18 @@
 // actions
+import { storageNameNavMenuKey } from "@/utils/global";
+
 const setSysName = ({ commit }, sysName) => {
-  commit("SETSYSNAME", sysName);
+  const name = sysName || "";
+  commit("SETSYSNAME", name);
 };
 const setNavMenuKey = ({ commit }, navMenuKey) => {
-  commit("SETNAVMENUKEY", navMenuKey);
+  const key = navMenuKey || "";
+  commit("SETNAVMENUKEY", key);
+  localStorage.setItem(storageNameNavMenuKey, key);
 };
 const setNavMenus = ({ commit }, navMenus) => {
-  commit("SETNAVMENUS", navMenus);
+  const menus = navMenus || [];
+  commit("SETNAVMENUS", JSON.parse(JSON.stringify(menus)));
 };
 
 export const actions = {

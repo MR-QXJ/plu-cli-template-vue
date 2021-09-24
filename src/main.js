@@ -35,7 +35,9 @@ Vue.directive("money", {
 });
 
 router.beforeEach((to, from, next) => {
+  //路由带有requiresAuth元数据
   if (to.matched.some(record => record.meta.requiresAuth)) {
+    //保存导航菜单key
     if (to.query._navMenuKey) {
       store.dispatch("setNavMenuKey", to.query._navMenuKey);
     }
@@ -43,7 +45,7 @@ router.beforeEach((to, from, next) => {
     const user = JSON.parse(
       window.sessionStorage.getItem(storageNameUser) || "{}"
     );
-
+    //检测token
     const token = user.token || "";
     if (token === "") {
       return next({

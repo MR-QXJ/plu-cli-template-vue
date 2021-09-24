@@ -1,19 +1,14 @@
 // mutations
-import { storageNameNavMenuKey } from "@/utils/global";
 
 const SETSYSNAME = (state, sysName) => {
-  const name = sysName || "";
-  state._sys.sysName = name;
+  state._sys.sysName = sysName;
 };
 const SETNAVMENUKEY = (state, navMenuKey) => {
-  const key = navMenuKey || "";
-  state._navMenuKey = key;
-  localStorage.setItem(storageNameNavMenuKey, key);
+  state._navMenuKey = navMenuKey;
 };
 
 const SETNAVMENUS = (state, navMenus) => {
-  const menus = navMenus || [];
-  state._navMenus = JSON.parse(JSON.stringify(menus));
+  state._navMenus = navMenus;
 };
 
 export const mutations = {
