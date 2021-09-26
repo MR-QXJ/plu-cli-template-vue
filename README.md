@@ -1,2 +1,10 @@
-## vue2项目模板
-- 基于`vue2.x` 与 `ant-design-vue`架构的后台方案模板，持续优化中...
+
+## 平南掌上消防app
+- 打包时需要在manifest.json中plus下设置沉浸式导航栏: 
+``` json
+"statusbar" : {
+    "immersed" : true,
+    "style" : "light"
+},
+```
+

@@ -1,318 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="edge" />
-    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
-    <!-- 使用CDN的CSS文件 -->
-    <% for (var i in htmlWebpackPlugin.options.cdn &&
-    htmlWebpackPlugin.options.cdn.css) { %>
-    <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet" />
-    <% } %>
-    <title></title>
-    <link rel="shortcut icon" href="<%= BASE_URL %>favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no viewport-fit=cover"
+    />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+
+    <!-- <script>
+      ;/(iPhone|iPad|iPhone OS|Phone|iPod|iOS|Android)/i.test(navigator.userAgent) &&
+        ((head = document.getElementsByTagName('head')),
+        (viewport = document.createElement('meta')),
+        (viewport.name = 'viewport'),
+        (viewport.content =
+          'target-densitydpi=device-dpi, width=750px, user-scalable=no'), // 375为设计稿的一半
+        head.length > 0 && head[head.length - 1].appendChild(viewport))
+    </script> -->
+
+    <script
+      type="text/javascript"
+      src="https://g.alicdn.com/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="<%= BASE_URL %>assets/js/verification/index.min.js"
+    ></script>
+    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+
+    <title>平南掌上消防</title>
     <style>
-      * {
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        margin: 0;
-        padding: 0;
-        scrollbar-width: 2px;
-        -ms-overflow-style: none;
+      body {
+        /* 兼容ios >=11.2 ,meta上需加上 viewport-fit 才生效 */
+        padding-bottom: env(safe-area-inset-bottom);
       }
-      body,
-      html {
-        background-color: #ffffff;
-        height: 100%;
-        margin: 0;
-        overflow: hidden;
-        padding: 0;
-        width: 100%;
-        scrollbar-width: 2px;
-        -ms-overflow-style: none;
-      }
-      /* html::-webkit-scrollbar{width:0px} */
-      .noteNoJS {
-        background-color: #ffffff;
-        height: 100%;
-        left: 0;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 10000;
-      }
-      .noteNoJS span {
-        display: block;
-        color: #333333;
-        font-size: 14px;
-        margin-top: 50px;
-        text-align: center;
-        width: 100%;
-      }
-      .enter {
-        left: 0;
-        margin: 0 auto;
-        margin-top: -25px;
-        position: fixed;
-        right: 0;
-        top: 50%;
-        width: 362px;
-        z-index: 10000;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -moz-box;
-        display: -moz-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -moz-box-align: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        -moz-justify-content: center;
-        justify-content: center;
-      }
-      /* .enter .enterLogo {
-        float: left;
-        background: url(./assets/imgs/logo/logo-company-name-small.png)
-          no-repeat 0 center;
-        height: 46px;
-        width: 176px;
-      } */
-      .enter .loading {
-        color: #005097;
-        float: left;
-        font: 26px Monospace;
-        letter-spacing: 5px;
-        margin-left: 10px;
-        padding: 7px 0;
-        /* width: 176px; */
-      }
-      .enter .loading > span {
-        animation: flip-txt 2s infinite;
-        display: inline-block;
-        transform-origin: 50% 50% -10px;
-        transform-style: preserve-3d;
-      }
-      .enter .loading > span:nth-child(1) {
-        animation-delay: 0.1s;
-        -ms-animation-delay: 0.1s;
-        -moz-animation-delay: 0.1s;
-        -webkit-animation-delay: 0.1s;
-        -o-animation-delay: 0.1s;
-      }
-      .enter .loading > span:nth-child(2) {
-        animation-delay: 0.2s;
-        -ms-animation-delay: 0.2s;
-        -moz-animation-delay: 0.2s;
-        -webkit-animation-delay: 0.2s;
-        -o-animation-delay: 0.2s;
-      }
-      .enter .loading > span:nth-child(3) {
-        animation-delay: 0.3s;
-        -ms-animation-delay: 0.3s;
-        -moz-animation-delay: 0.3s;
-        -webkit-animation-delay: 0.3s;
-        -o-animation-delay: 0.3s;
-      }
-      .enter .loading > span:nth-child(4) {
-        animation-delay: 0.4s;
-        -ms-animation-delay: 0.4s;
-        -moz-animation-delay: 0.4s;
-        -webkit-animation-delay: 0.4s;
-        -o-animation-delay: 0.4s;
-      }
-      .enter .loading > span:nth-child(5) {
-        animation-delay: 0.5s;
-        -ms-animation-delay: 0.5s;
-        -moz-animation-delay: 0.5s;
-        -webkit-animation-delay: 0.5s;
-        -o-animation-delay: 0.5s;
-      }
-      .enter .loading > span:nth-child(6) {
-        animation-delay: 0.6s;
-        -ms-animation-delay: 0.6s;
-        -moz-animation-delay: 0.6s;
-        -webkit-animation-delay: 0.6s;
-        -o-animation-delay: 0.6s;
-      }
-      .enter .loading > span:nth-child(7) {
-        animation-delay: 0.7s;
-        -ms-animation-delay: 0.7s;
-        -moz-animation-delay: 0.7s;
-        -webkit-animation-delay: 0.7s;
-        -o-animation-delay: 0.7s;
-      }
-      @keyframes flip-txt {
-        to {
-          transform: rotateX(1turn);
-          -ms-transform: rotateX(1turn);
-          -moz-transform: rotateX(1turn);
-          -webkit-transform: rotateX(1turn);
-          -o-transform: rotateX(1turn);
-        }
-      }
-      .noteCompatibilityWarrper {
-        background-color: #ffffff;
-        display: none;
-        height: 100%;
-        left: 0;
-        overflow: hidden;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 10001;
-      }
-      .noteCompatibilityBkg {
-        background-color: #ffffff;
-        border-radius: 5px;
-        box-shadow: 0 0 10px #999999;
-        left: 50%;
-        margin-left: -300px;
-        overflow: hidden;
-        padding: 40px 0;
-        position: absolute;
-        top: 30%;
-        width: 640px;
-        z-index: 1;
-      }
-      .noteCompatibilityNote {
-        color: #333333;
-        font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica,
-          "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
-        font-size: 16px;
-        font-weight: bold;
-        height: 30px;
-        line-height: 30px;
-        padding: 0 40px;
-        width: 100%;
-      }
-      .noteCompatibilityButtons {
-        margin: 30px 0;
-        overflow: hidden;
-        padding: 0 40px;
-        width: 100%;
-      }
-      .noteCompatibilityA {
-        display: block;
-        float: left;
-        font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica,
-          "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
-        font-size: 14px;
-        height: 36px;
-        line-height: 32px;
-        margin-right: 20px;
-        overflow: hidden;
-        text-align: center;
-        text-decoration: none;
-      }
-      .noteCompatibilityA:last-child {
-        margin-right: 0;
-      }
-      .noteCompatibilityA span {
-        background-color: #3eb3e6;
-        border-radius: 3px;
-        color: #ffffff;
-        cursor: pointer;
-        display: block;
-        height: 32px;
-        padding: 0 10px;
-      }
-      .noteCompatibilityA:hover span {
-        background-color: #67c6f2;
-      }
-      /* .noteCompatibilityLogo {
-        background: url(./assets/imgs/logo/logo-company-name-small.png)
-          no-repeat center 0;
-        height: 23px;
-        width: 100%;
-      } */
     </style>
   </head>
   <body>
-    <noscript>
-      <div class="noteNoJS">
-        <span
-          >hi，我们很抱歉，在没有JavaScript的情况下平台无法正常使用，请在您的浏览器允许启用JavaScript。</span
-        >
-      </div>
-    </noscript>
-    <div class="enter">
-      <!-- <div class="enterLogo"></div> -->
-      <div class="loading">
-        <span>L</span><span>o</span><span>a</span><span>d</span><span>i</span
-        ><span>n</span><span>g</span>
-      </div>
-    </div>
     <div id="app"></div>
-    <div class="noteCompatibility noteCompatibilityWarrper">
-      <div class="noteCompatibilityBkg">
-        <div class="noteCompatibilityNote">
-          hi，您当前浏览器版本过低，可能存在安全风险，建议切换浏览器或极速模式：
-        </div>
-        <div class="noteCompatibilityButtons">
-          <!-- <a
-            target="_blank"
-            class="noteCompatibilityA"
-            href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads"
-          >
-            <span>IE 11+</span>
-          </a> -->
-          <a
-            target="_blank"
-            class="noteCompatibilityA"
-            href="https://www.google.cn/intl/zh-CN/chrome/browser/desktop/"
-          >
-            <span>谷歌 Chrome</span>
-          </a>
-          <a
-            target="_blank"
-            class="noteCompatibilityA"
-            href="https://browser.qq.com/?adtag=SEM1"
-          >
-            <span>QQ 浏览器</span>
-          </a>
-          <a
-            target="_blank"
-            class="noteCompatibilityA"
-            href="https://browser.qq.com/?adtag=SEM1"
-          >
-            <span>360 极速浏览器</span>
-          </a>
-          <a
-            target="_blank"
-            class="noteCompatibilityA"
-            href="http://www.firefox.com.cn/"
-          >
-            <span>火狐 Firefox</span>
-          </a>
-        </div>
-        <!-- <div class="noteCompatibilityLogo"></div> -->
-      </div>
-    </div>
-    <script>
-      const userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
-      const isIE =
-        userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器
-      const isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器
-      const isIE11 =
-        userAgent.indexOf("Trident") > -1 && userAgent.indexOf("rv:11.0") > -1;
-      if (isIE || isEdge || isIE11) {
-        document.getElementsByClassName(
-          "noteCompatibilityWarrper"
-        )[0].style.display = "block";
-      }
-    </script>
-
-    <!-- 使用CDN的JS文件 -->
-    <% for (var i in htmlWebpackPlugin.options.cdn &&
-    htmlWebpackPlugin.options.cdn.js) { %>
-    <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
-    <% } %>
-    
-    <script type="text/javascript" src="<%= BASE_URL %>assets/js/threeparty/echarts/echarts.min.js"></script>
   </body>
+  <script
+    type="text/javascript"
+    src="http://iclient.supermap.io/libs/iclient8c/libs/SuperMap.Include.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="<%= BASE_URL %>assets/js/threeparty/coordtransform/index.js"
+  ></script>
+
+  <script type="text/javascript">
+    // 用于判断首页是否该添加监听home键回退
+    window.plusready = false;
+    // 离线打包需要这段代码
+    // 扩展API是否准备好，如果没有则监听“plusready"事件
+    if (window.plus) {
+      plusReady();
+    } else {
+      document.addEventListener("plusready", plusReady, false);
+    }
+    // 扩展API准备完成后要执行的操作
+    function plusReady() {
+      // plus.screen.lockOrientation("landscape"); // 把屏幕方向改变成横屏正方向
+      const ws = plus.webview.currentWebview();
+      window.plusready = true;
+
+      // eslint-disable-next-line
+      //检测更新
+      //plus.runtime.getProperty(plus.runtime.appid, function (wgtinfo) {
+      //wgtVer = wgtinfo.version;
+      // checkUpdate(wgtVer)
+      //});
+    }
+    // 检测更新
+    // var checkUrl = "http://192.168.16.182:8200/attachments/file/getFile/wgt-wb/version.json";
+    // function checkUpdate(wgtVer) {
+    //   plus.nativeUI.showWaiting("检测更新...");
+    //   var xhr = new XMLHttpRequest();
+    //   xhr.onreadystatechange = function () {
+    //     switch (xhr.readyState) {
+    //       case 4:
+    //         plus.nativeUI.closeWaiting();
+    //         if (xhr.status == 200) {
+    //           plus.nativeUI.alert("版本有更新，请先下载");
+    //           var respObj = JSON.parse(xhr.responseText);
+    //           var newVer = respObj.version;
+    //           if (wgtVer && newVer && (wgtVer != newVer)) {
+    //             downWgt();  // 下载升级包
+    //           } else {
+    //             //无版本更新
+    //             // plus.nativeUI.alert("无新版本可更新！");
+    //           }
+    //         } else {
+    //           plus.nativeUI.alert("检测更新失败！");
+    //         }
+    //         break;
+    //       default:
+    //         break;
+    //     }
+    //   }
+    //   xhr.open('GET', checkUrl);
+    //   xhr.send();
+    // }
+    // // 下载wgt文件
+    // var packageUrl = "http://192.168.16.182:8200/attachments/file/getFile/wgt-wb/latest_package.apk";
+    // function downWgt() {
+    //   plus.nativeUI.showWaiting("开始下载文件,请耐心等待...");
+    //   var dtask = plus.downloader.createDownload( packageUrl, {}, function ( d, status ) {
+    //     if ( status == 200 ) { // 下载成功
+    //       var path = d.filename;
+    //       plus.runtime.install(path); //安装
+    //     } else {//下载失败
+    //       plus.nativeUI.alert( "文件下载失败！");
+    //     }
+    //   });
+    //   dtask.start();
+    // }
+  </script>
 </html>
