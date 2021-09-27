@@ -9,50 +9,51 @@
 
 <script>
 import zhCN from "ant-design-vue/lib/locale-provider/zh_CN";
+import { antModal } from "utils/tools/feedback";
 
 export default {
   name: "app",
   data() {
     return {
       // 本地化语言
-      locale: zhCN
-      // 是否显示最小浏览尺寸提示
-      // showDisplayMinSizeNote: false,
-      // 最小浏览尺寸提示框
-      // displayMsg: null,
+      locale: zhCN,
+      // 初始显示最小浏览尺寸提示
+      showDisplayMinSizeNote: false,
+      // 最小浏览尺寸提示框实例
+      displayMsg: null
     };
   },
-  computed: {},
   methods: {
     // 隐藏页面初始化loading
     hideLoading: function() {
       document.getElementsByClassName("enter")[0].style.display = "none";
-    }
+    },
     // 显示最小浏览尺寸提示
-    // displayMinSize: function() {
-    //   this.showDisplayMinSizeNote =
-    //     document.body.clientWidth < 1024 || document.body.clientHeight < 600;
-    //   if (this.showDisplayMinSizeNote) {
-    //     if (!this.displayMsg) {
-    //       this.displayMsg = this.$root.showMessageModal(
-    //         "warning",
-    //         "提醒",
-    //         "为了您更好的体验，建议使用分辨率1024×600及以上浏览",
-    //         () => {
-    //           this.displayMsg.destroy();
-    //           this.displayMsg = null;
-    //         }
-    //       );
-    //     }
-    //   } else {
-    //     if (this.displayMsg) {
-    //       this.displayMsg.destroy();
-    //       this.displayMsg = null;
-    //     }
-    //   }
-    // }
+    displayMinSize: function() {
+      this.showDisplayMinSizeNote =
+        document.body.clientWidth < 1024 || document.body.clientHeight < 600;
+      if (this.showDisplayMinSizeNote) {
+        if (!this.displayMsg) {
+          this.displayMsg = antModal(
+            "warning",
+            "提醒",
+            "为了您更好的体验，建议使用分辨率1024×600及以上浏览",
+            () => {
+              this.displayMsg.destroy();
+              this.displayMsg = null;
+            }
+          );
+        }
+      } else {
+        if (this.displayMsg) {
+          this.displayMsg.destroy();
+          this.displayMsg = null;
+        }
+      }
+    }
   },
   mounted() {
+    window.onresize = this.displayMinSize;
     this.hideLoading();
   }
 };

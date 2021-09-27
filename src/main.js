@@ -13,7 +13,6 @@ Vue.use(initAntd);
 
 // 全局注册组件
 import { storageNameUser } from "@/utils/global";
-import { outputmoney } from "utils/tools/common";
 
 Vue.config.productionTip = false;
 
@@ -23,14 +22,6 @@ import "moment/locale/zh-cn";
 Vue.directive("title", {
   inserted: function(el, binding) {
     document.title = binding.value;
-  }
-});
-Vue.directive("money", {
-  inserted: function(el, binding) {
-    el.innerHTML = outputmoney(binding.value);
-  },
-  update: function(el, binding) {
-    el.innerHTML = outputmoney(binding.value);
   }
 });
 

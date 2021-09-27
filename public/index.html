@@ -307,12 +307,12 @@
       }
     </script>
 
-    <!-- 使用CDN的JS文件 -->
+    <!-- 打包时使用cdn -->
     <% for (var i in htmlWebpackPlugin.options.cdn &&
     htmlWebpackPlugin.options.cdn.js) { %>
     <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
     <% } %>
-    
-    <script type="text/javascript" src="<%= BASE_URL %>assets/js/threeparty/echarts/echarts.min.js"></script>
+    <!-- 任何环境都使用cdn -->
+    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
   </body>
 </html>

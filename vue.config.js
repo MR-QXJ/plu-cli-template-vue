@@ -11,8 +11,9 @@ const devNeedCdn = true;
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
-// cdn链接
+// 打包使用cdn
 const cdn = {
+  // 已使用cdn的不需要打包
   externals: {
     echarts: "echarts",
     vue: "Vue",
@@ -24,7 +25,6 @@ const cdn = {
   css: [],
   // cdn的js链接
   js: [
-    "https://cdn.jsdelivr.net/npm/echarts@4/dist/echarts.min.js?_v_=1609266909542",
     "https://cdn.bootcss.com/vue/2.6.10/vue.min.js",
     "https://cdn.bootcss.com/vuex/3.0.1/vuex.min.js",
     "https://cdn.bootcss.com/vue-router/3.0.7/vue-router.min.js",
@@ -99,7 +99,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        data: `@import "@/assets/css/common.scss";`
+        prependData: `@import "@/assets/css/common.scss";`
       },
 
       less: {

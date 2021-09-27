@@ -1,6 +1,6 @@
 <template>
-  <div class="h100 w100" id="echart-wrap">
-    <div class="w100 h100" id="echart" @resize="resizeHandle"></div>
+  <div class="h100 w100">
+    <div class="w100 h100" :id="chartId" @resize="resizeHandle"></div>
     <object
       v-if="autoResize"
       ref="objectRef"
@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import { initEchart } from "utils/echart";
-import { debounce } from "utils/tools/common";
+import { initEchart } from "utils/tools/echart";
+import { GUID, debounce } from "utils/tools/common";
 
 export default {
   props: {
@@ -42,6 +42,7 @@ export default {
   },
   data() {
     return {
+      chartId: "echart",
       echart: null,
       //防抖方式resize图表，写在methods中不会被缓存生成闭包
       resizeHandle: debounce(() => {
@@ -49,8 +50,11 @@ export default {
       }, 200)
     };
   },
+  created() {
+    this.chartId = `chart-${GUID()}`;
+  },
   mounted() {
-    this.echart = initEchart("echart", this.chartOpt || {}, e => {
+    this.echart = initEchart(this.chartId, this.chartOpt || {}, e => {
       this.$emit("click", e);
     });
 
