@@ -3,35 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no viewport-fit=cover"
     />
     <meta content="telephone=no" name="format-detection" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-
-    <!-- <script>
-      ;/(iPhone|iPad|iPhone OS|Phone|iPod|iOS|Android)/i.test(navigator.userAgent) &&
-        ((head = document.getElementsByTagName('head')),
-        (viewport = document.createElement('meta')),
-        (viewport.name = 'viewport'),
-        (viewport.content =
-          'target-densitydpi=device-dpi, width=750px, user-scalable=no'), // 375为设计稿的一半
-        head.length > 0 && head[head.length - 1].appendChild(viewport))
-    </script> -->
-
-    <script
-      type="text/javascript"
-      src="https://g.alicdn.com/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="<%= BASE_URL %>assets/js/verification/index.min.js"
-    ></script>
-    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
-
-    <title>平南掌上消防</title>
+    <title>vant</title>
     <style>
       body {
         /* 兼容ios >=11.2 ,meta上需加上 viewport-fit 才生效 */
@@ -41,82 +19,35 @@
   </head>
   <body>
     <div id="app"></div>
+
+    <!-- 使用CDN的JS文件 -->
+    <% for (var i in htmlWebpackPlugin.options.cdn &&
+    htmlWebpackPlugin.options.cdn.js) { %>
+    <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
+    <% } %>
+    <script
+    type="text/javascript"
+    src="https://g.alicdn.com/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"
+    ></script>
+    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+    <script type="text/javascript">
+      // 用于判断首页是否该添加监听home键回退
+      window.plusready = false;
+      // 离线打包需要这段代码
+      // 扩展API是否准备好，如果没有则监听“plusready"事件
+      if (window.plus) {
+        plusReady();
+      } else {
+        document.addEventListener("plusready", plusReady, false);
+      }
+      // 扩展API准备完成后要执行的操作
+      function plusReady() {
+        // plus.screen.lockOrientation("landscape"); // 把屏幕方向改变成横屏正方向
+        const ws = plus.webview.currentWebview();
+        window.plusready = true;
+      }
+    </script>
   </body>
-  <script
-    type="text/javascript"
-    src="http://iclient.supermap.io/libs/iclient8c/libs/SuperMap.Include.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="<%= BASE_URL %>assets/js/threeparty/coordtransform/index.js"
-  ></script>
 
-  <script type="text/javascript">
-    // 用于判断首页是否该添加监听home键回退
-    window.plusready = false;
-    // 离线打包需要这段代码
-    // 扩展API是否准备好，如果没有则监听“plusready"事件
-    if (window.plus) {
-      plusReady();
-    } else {
-      document.addEventListener("plusready", plusReady, false);
-    }
-    // 扩展API准备完成后要执行的操作
-    function plusReady() {
-      // plus.screen.lockOrientation("landscape"); // 把屏幕方向改变成横屏正方向
-      const ws = plus.webview.currentWebview();
-      window.plusready = true;
-
-      // eslint-disable-next-line
-      //检测更新
-      //plus.runtime.getProperty(plus.runtime.appid, function (wgtinfo) {
-      //wgtVer = wgtinfo.version;
-      // checkUpdate(wgtVer)
-      //});
-    }
-    // 检测更新
-    // var checkUrl = "http://192.168.16.182:8200/attachments/file/getFile/wgt-wb/version.json";
-    // function checkUpdate(wgtVer) {
-    //   plus.nativeUI.showWaiting("检测更新...");
-    //   var xhr = new XMLHttpRequest();
-    //   xhr.onreadystatechange = function () {
-    //     switch (xhr.readyState) {
-    //       case 4:
-    //         plus.nativeUI.closeWaiting();
-    //         if (xhr.status == 200) {
-    //           plus.nativeUI.alert("版本有更新，请先下载");
-    //           var respObj = JSON.parse(xhr.responseText);
-    //           var newVer = respObj.version;
-    //           if (wgtVer && newVer && (wgtVer != newVer)) {
-    //             downWgt();  // 下载升级包
-    //           } else {
-    //             //无版本更新
-    //             // plus.nativeUI.alert("无新版本可更新！");
-    //           }
-    //         } else {
-    //           plus.nativeUI.alert("检测更新失败！");
-    //         }
-    //         break;
-    //       default:
-    //         break;
-    //     }
-    //   }
-    //   xhr.open('GET', checkUrl);
-    //   xhr.send();
-    // }
-    // // 下载wgt文件
-    // var packageUrl = "http://192.168.16.182:8200/attachments/file/getFile/wgt-wb/latest_package.apk";
-    // function downWgt() {
-    //   plus.nativeUI.showWaiting("开始下载文件,请耐心等待...");
-    //   var dtask = plus.downloader.createDownload( packageUrl, {}, function ( d, status ) {
-    //     if ( status == 200 ) { // 下载成功
-    //       var path = d.filename;
-    //       plus.runtime.install(path); //安装
-    //     } else {//下载失败
-    //       plus.nativeUI.alert( "文件下载失败！");
-    //     }
-    //   });
-    //   dtask.start();
-    // }
-  </script>
+    
 </html>

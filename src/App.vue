@@ -8,22 +8,11 @@
 export default {
   name: "app",
   components: {},
-  methods: {
-    // 页面尺寸改变
-    callResize: function() {
-      const child = this.$refs["child"];
-      if (child && typeof child.callResize === "function") {
-        this.t = setTimeout(() => {
-          child.callResize();
-        }, 300);
-      }
-    }
-  }
+  methods: {}
 };
 </script>
 
 <style lang="scss">
-@import "@/assets/css/common.scss";
 @include common;
 @include a-common;
 @include input-common;
@@ -81,42 +70,6 @@ button {
 }
 .title-text {
   color: #2a57b7;
-}
-/* flex */
-.flex {
-  display: flex;
-}
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
-/* 垂直居中 */
-.flex-align-center {
-  display: flex;
-  align-items: center;
-}
-/* 垂直居中between */
-.flex-align-center-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-/* 垂直平铺 */
-.flex-align-center-around {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-/* 水平居中 */
-.flex-justify-center {
-  display: flex;
-  justify-content: center;
-}
-/* 居中 */
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 // 滚动条
 *::-webkit-scrollbar {
@@ -250,17 +203,17 @@ button {
 .van-popup {
   z-index: 99999999 !important;
 }
-.BMap_bubble_title {
-  a {
-    display: none;
-  }
-}
+// .BMap_bubble_title {
+//   a {
+//     display: none;
+//   }
+// }
 
-.BMap_cpyCtrl {
-  display: none;
-}
+// .BMap_cpyCtrl {
+//   display: none;
+// }
 
-.anchorBL {
-  display: none;
-}
+// .anchorBL {
+//   display: none;
+// }
 </style>

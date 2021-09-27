@@ -95,14 +95,6 @@ Vue.use(DropdownItem);
 Vue.use(VanImage);
 Vue.config.productionTip = false;
 
-//图片预览
-import preview from "vue-photo-preview";
-import "vue-photo-preview/dist/skin.css";
-Vue.use(preview);
-
-import NavBack from "components/pub/NavBack";
-Vue.component("nav-back", NavBack);
-
 import { mapGetters, mapActions } from "vuex";
 import { showToast, storageClear, quitApp, storageGet } from "@/utils/tool";
 

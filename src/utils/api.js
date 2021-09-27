@@ -12,7 +12,7 @@ const isDev = process.env.NODE_ENV === "development";
 // app 打包测试地址
 // export const URL = `${isDev ? "" : "http://192.168.16.131:8898"}/zhxfgxpnapi`;
 // app 打包 正式地址
-export const URL = isDev ? '/zhxfgxpnapi' : process.env.VUE_APP_API;
+export const URL = isDev ? "/zhxfgxpnapi" : process.env.VUE_APP_API;
 
 const APPLET = "/pingnan-producer-applet/api/applet";
 // 通用平台
