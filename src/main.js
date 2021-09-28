@@ -7,16 +7,14 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-// 注册ant-design-vue
-import initAntd from "utils/use-antd";
-Vue.use(initAntd);
+// 注册Element-UI
+import initElement from "utils/use-element";
+Vue.use(initElement);
 
 // 全局注册组件
 import { storageNameUser } from "@/utils/global";
 
 Vue.config.productionTip = false;
-
-import "moment/locale/zh-cn";
 
 // 自定义指令-更改标题
 Vue.directive("title", {

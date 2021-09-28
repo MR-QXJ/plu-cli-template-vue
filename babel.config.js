@@ -15,13 +15,11 @@ module.exports = {
     ]
   ],
   plugins: [
-    // "@babel/plugin-transform-runtime",
     [
-      "import",
+      "component",
       {
-        libraryName: "ant-design-vue",
-        libraryDirectory: "es",
-        style: true
+        "libraryName": "element-ui",
+        "styleLibraryName": "theme-chalk"
       }
     ]
   ]

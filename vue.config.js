@@ -100,35 +100,6 @@ module.exports = {
     loaderOptions: {
       sass: {
         prependData: `@import "@/assets/css/common.scss";`
-      },
-
-      less: {
-        // antd自定义主题
-        modifyVars: {
-          "@primary-color": "#00b3aa",
-          "@body-background": "#eaeaea",
-          // 按钮
-          "@btn-default-bg": "#ffffff",
-          // 导航菜单
-          "@menu-inline-toplevel-item-height": "50px",
-          "@menu-item-height": "50px",
-          "@menu-bg": "#00474b",
-          "@menu-popup-bg": "#00474b",
-          "@menu-item-color": "#ffffff",
-          "@menu-item-active-bg": "#00b3aa",
-          "@menu-item-active-border-width": "0px",
-          "@menu-item-group-title-color": "#ffffff",
-          // 表单
-          "@form-item-margin-bottom": "19px",
-          // 输入框
-          "@input-addon-bg": "#e8e8e8",
-          // 折叠面板
-          "@collapse-header-bg": "#f6f6f6"
-          //弹窗头部
-          // "@modal-header-bg": "#00bfe8",
-          // "@modal-heading-color": "#ffffff"
-        },
-        javascriptEnabled: true
       }
     }
   },

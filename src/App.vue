@@ -1,14 +1,11 @@
 // 入口页
 <template>
-  <a-config-provider :locale="locale">
     <div class="h100 w100" id="app">
       <router-view ref="child" />
     </div>
-  </a-config-provider>
 </template>
 
 <script>
-import zhCN from "ant-design-vue/lib/locale-provider/zh_CN";
 import { antModal } from "utils/tools/feedback";
 
 export default {
