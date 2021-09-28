@@ -1,10 +1,3 @@
+## vue2项目模板
 
-## 平南掌上消防app
-- 打包时需要在manifest.json中plus下设置沉浸式导航栏: 
-``` json
-"statusbar" : {
-    "immersed" : true,
-    "style" : "light"
-},
-```
-
+- 基于`vue2.x` 与 `vant-ui`架构的h5方案模板，持续优化中...
