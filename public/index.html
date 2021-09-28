@@ -30,22 +30,5 @@
     src="https://g.alicdn.com/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"
     ></script>
     <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
-    <script type="text/javascript">
-      // 用于判断首页是否该添加监听home键回退
-      window.plusready = false;
-      // 离线打包需要这段代码
-      // 扩展API是否准备好，如果没有则监听“plusready"事件
-      if (window.plus) {
-        plusReady();
-      } else {
-        document.addEventListener("plusready", plusReady, false);
-      }
-      // 扩展API准备完成后要执行的操作
-      function plusReady() {
-        // plus.screen.lockOrientation("landscape"); // 把屏幕方向改变成横屏正方向
-        const ws = plus.webview.currentWebview();
-        window.plusready = true;
-      }
-    </script>
   </body>
 </html>

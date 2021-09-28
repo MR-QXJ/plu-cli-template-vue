@@ -13,18 +13,9 @@ new Vue({
     return {
       winH: 0, //窗口高(px)
       winW: 0, //窗口宽(px)
-      barH: 0 //系统状态栏高度(px)
     };
   },
   mounted() {
-    document.addEventListener(
-      "plusready",
-      () => {
-        //状态栏高度
-        this.barH = plus.navigator.getStatusbarHeight() + "px" || 0;
-      },
-      false
-    );
     this.winH =
       document.body.clientHeight || document.documentElement.clientHeight;
     this.winW =

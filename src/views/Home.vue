@@ -8,7 +8,6 @@
   </div>
 </template>
 <script>
-import { homeBackListener } from "utils/tools/plus";
 import BottomBar from "components/pub/BottomBar";
 export default {
   components: {
@@ -17,9 +16,6 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    homeBackListener(this);
-  }
 };
 </script>
 <style lang="scss" scoped>
