@@ -9,22 +9,22 @@
     />
     <meta content="telephone=no" name="format-detection" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <!-- 打包时使用cdn -->
+    <% for (var i in htmlWebpackPlugin.options.cdn &&
+    htmlWebpackPlugin.options.cdn.css) { %>
+    <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet" />
+    <% } %>
     <title>vant</title>
-    <style>
-      body {
-        /* 兼容ios >=11.2 ,meta上需加上 viewport-fit 才生效 */
-        padding-bottom: env(safe-area-inset-bottom);
-      }
-    </style>
   </head>
   <body>
     <div id="app"></div>
 
-    <!-- 使用CDN的JS文件 -->
+    <!-- 打包时使用cdn -->
     <% for (var i in htmlWebpackPlugin.options.cdn &&
     htmlWebpackPlugin.options.cdn.js) { %>
     <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
     <% } %>
+     <!-- 任何环境都使用cdn -->
     <script
     type="text/javascript"
     src="https://g.alicdn.com/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"
@@ -48,6 +48,4 @@
       }
     </script>
   </body>
-
-    
 </html>

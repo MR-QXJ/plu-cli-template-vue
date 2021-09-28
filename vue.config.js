@@ -12,7 +12,6 @@ function resolve(dir) {
 // cdn链接
 const cdn = {
   externals: {
-    echarts: "echarts",
     vue: "Vue",
     "vue-router": "VueRouter",
     vuex: "Vuex",
@@ -40,6 +39,7 @@ module.exports = {
   chainWebpack: config => {
     config.resolve.alias
       .set("@", resolve("src"))
+      .set("mixins", resolve("src/mixins"))
       .set("assets", resolve("src/assets"))
       .set("network", resolve("src/network"))
       .set("request", resolve("src/network/request"))

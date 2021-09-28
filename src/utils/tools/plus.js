@@ -1,153 +1,3 @@
-/* eslint-disable no-unreachable */
-/*
- * 工具类
- */
-
-/*
- * 保留小数（四舍五入）
- * @param value 值
- * @param digit 位数
- */
-export function numRound(value, digit = 2) {
-  return value.toFixed(digit);
-}
-
-// 防抖
-export function debounce(fn, delay = 700) {
-  let timer;
-
-  // 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 func 函数
-  return function() {
-    // 保存函数调用时的上下文和参数，传递给func
-    var context = this;
-    var args = arguments;
-
-    // 函数被调用，清除定时器
-    clearTimeout(timer);
-
-    // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
-    // 再过 delay 毫秒就执行 func
-    timer = setTimeout(function() {
-      fn.apply(context, args);
-    }, delay);
-  };
-}
-/*
- * 判断字符串数据是否为空
- * @param data 数据
- * @param def 默认值
- */
-export function dataIsNullStr(data, def = "") {
-  return data !== undefined && data !== null && data !== "null" ? data : def;
-}
-
-/*
- * 判断数字数据是否为空
- * @param data 数据
- * @param def 默认值
- */
-export function dataIsNullNumber(data, def = -1) {
-  return data !== undefined && data !== null && data !== "null" && data !== ""
-    ? data
-    : def;
-}
-
-/*
- * 判断布尔型数据是否为空
- * @param data 数据
- * @param def 默认值
- */
-export function dataIsNullBool(data, def = false) {
-  return data !== undefined && data !== null && data !== "null" ? data : def;
-}
-
-/*
- * 判断对象数据是否为空
- * @param data 数据
- * @param def 默认值
- */
-export function dataIsNullObj(data, def = {}) {
-  return data !== undefined && data !== null && data !== "null" && data !== ""
-    ? data
-    : def;
-}
-
-/*
- * 判断数组数据是否为空
- * @param data 数据
- * @param def 默认值
- */
-export function dataIsNullArray(data, def = []) {
-  return data !== undefined && data !== null && data !== "null" && data !== ""
-    ? data
-    : def;
-}
-
-/*
- * 清空数组（删除索引及索引之后）
- * @param arr 数组
- * @param index 开始索引
- */
-export function clearArray(arr, index = 0) {
-  arr.splice(index, arr.length - index);
-}
-
-/*
- * 日期格式化
- * @param date 日期
- * @param format 格式
- */
-export function dateFormat(date, format) {
-  if (date === null) {
-    return date;
-  }
-  if (typeof date === "string") {
-    return date;
-  }
-  const o = {
-    "M+": date.getMonth() + 1,
-    "d+": date.getDate(),
-    "h+": date.getHours(),
-    "m+": date.getMinutes(),
-    "s+": date.getSeconds(),
-    "q+": Math.floor((date.getMonth() + 3) / 3),
-    S: date.getMilliseconds()
-  };
-  let result = format;
-  if (/(y+)/.test(result)) {
-    result = result.replace(
-      RegExp.$1,
-      (date.getFullYear() + "").substr(4 - RegExp.$1.length)
-    );
-  }
-  let k = null;
-  for (k in o) {
-    if (new RegExp(`(${k})`).test(result)) {
-      result = result.replace(
-        RegExp.$1,
-        RegExp.$1.length === 1 ? o[k] : `00${o[k]}`.substr(`${o[k]}`.length)
-      );
-    }
-  }
-  return result;
-}
-
-/*
- * 转换数据字典代码或列表代码
- * @param data 数据
- * @param keys 参数名
- */
-export function transformCodeSelect(data, keys) {
-  const codes = [];
-  data.map(code => {
-    codes.push({
-      key: dataIsNullStr(code[keys[0]]),
-      text: dataIsNullStr(code[keys[1]])
-    });
-  });
-  return codes;
-}
-
 //调用原生方法
 // 呼出电话号码
 export function arouseCall(number) {
@@ -587,79 +437,22 @@ export function playNewMsgWav() {
 }
 
 /**
- *
- * @param func    {Function}   实际要执行的函数
- * @param wait    {Number}     执行间隔，单位是毫秒（ms），默认100ms
- *
- * @return        {Function}   返回一个“节流”函数
+ * 监听home键回退：有slide(设置滑动页组件显示)则设为false,否则回到上一页
+ * @param vm 当前组件实例
  */
+let backBtnFn = null; //返回按钮回调
+export function homeBackListener(vm) {
+  // 移除监听home键回退首页
+  backBtnFn && removeBackButton(backBtnFn);
+  backBtnFn = backFn;
+  // 添加监听home键回退
+  addBackButton(backFn);
 
-export function throttle(func, wait = 1000) {
-  // 利用闭包保存定时器和上次执行时间
-  let timer = null;
-  let previous; // 上次执行时间
-  return function() {
-    // 保存函数调用时的上下文和参数，传递给 fn
-    const context = this;
-    const args = arguments;
-    const now = +new Date();
-    if (previous && now < previous + wait) {
-      // 周期之中
-      clearTimeout(timer);
-      timer = setTimeout(function() {
-        previous = now;
-        func.apply(context, args);
-      }, wait);
+  function backFn() {
+    if (vm.slide) {
+      vm.slide = false;
     } else {
-      previous = now;
-      func.apply(context, args);
+      vm.$router.go(-1);
     }
-  };
-}
-
-// echart y轴最大值
-export function setAxisScale(max) {
-  let maxScale =
-    max !== undefined && max !== null && max !== "null" && max !== ""
-      ? Number(max)
-      : 5;
-  //null取值最大，如果传maxScale可能不均分
-  return maxScale >= 5 ? null : 5;
-}
-
-/**
- * 初始化时间格式
- * @params {number}
- * @returns
- */
-export function formatTime(time) {
-  let d = new Date(time);
-  let year = d.getFullYear();
-  let month = d.getMonth() + 1;
-  month = month < 10 ? "0" + month : month;
-  let day = d.getDate();
-  day = day < 10 ? "0" + day : day;
-
-  return year + "-" + month + "-" + day;
-}
-
-/**
- * 获取年月日
- */
-export function getTime() {
-  let myDate = new Date();
-  let year = myDate.getFullYear();
-  let mouth = myDate.getMonth() + 1;
-  let day = myDate.getDate();
-  return [year, mouth, day];
-}
-/**
- * 获取某年某月的天数
- * @param {*} year 年
- * @param {*} month 月
- */
-export function getDaysInMonth(year, month) {
-  month = parseInt(month, 10);
-  let temp = new Date(year, month, 0);
-  return temp.getDate();
+  }
 }

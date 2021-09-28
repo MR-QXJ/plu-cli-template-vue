@@ -20,17 +20,17 @@ export default {
     return {
       barOptions: [
         {
-          icon: require("../../assets/img/index/index.png"),
-          iconA: require("../../assets/img/index/index2.png"),
+          icon: require("assets/img/pub/home.png"),
+          iconA: require("assets/img/pub/home_ac.png"),
           name: "首页",
           path: "/index",
           active: false
         },
         {
-          icon: require("../../assets/img/index/my1.png"),
-          iconA: require("../../assets/img/index/my2.png"),
+          icon: require("assets/img/pub/profile.png"),
+          iconA: require("assets/img/pub/profile_ac.png"),
           name: "我的",
-          path: "/mine",
+          path: "/profile",
           active: false
         }
       ]

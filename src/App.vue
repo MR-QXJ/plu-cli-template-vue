@@ -32,8 +32,10 @@ export default {
 }
 html,
 body {
-  height: 100%;
   overflow: hidden;
+  height: 100%;
+  /* 兼容ios >=11.2 ,meta上需加上 viewport-fit 才生效 */
+  padding-bottom: env(safe-area-inset-bottom);
   width: 100%;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -60,8 +62,18 @@ button {
   width: 100%;
   overflow: hidden;
 }
-.container {
+.page {
+  padding-bottom: 50px;
+  width: 100%;
+  height: 100%;
   background: #efeff4;
+  @include page-none-data;
+  .van-nav-bar {
+    background: #0e41a6;
+    /deep/.van-nav-bar__title {
+      color: #fff;
+    }
+  }
 }
 .text-ellipsis {
   overflow: hidden;

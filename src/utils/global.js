@@ -1,19 +1,11 @@
 /*
  * 全局变量类
  */
-// 用户localStorage变量名
-export const storageNameUser = "user_pingnanapp";
-export const storageNameFireAlarmId = "firealarmid_pingnanapp";
-export const storageNameFlockId = "flockid_pingnanapp";
-export const storageNameNavMenu = "menu_pingnanapp";
-export const storageNameFireAlarmInfo = "firealarminfo_pingnanapp";
-export const storageNamePosition = "geoposition_pingnanapp";
-// export const urlVideoPlayerOnline =
-//   process.env.NODE_ENV === "development"
-//     ? "https://hik.hehang.net:9992/#/"
-//     : "https://zhxf.bbwyun.com:82/videoplayer/#/";
-// export const urlVideoPlayerOnline = "https://hik.hehang.net:9992/#/";
-export const urlVideoPlayerOnline = process.env.VUE_APP_VIDEO;
+
+// 1、请求根路径
+export const URL = process.env.VUE_APP_API;
+
+// 2、浏览器
 // 浏览器信息
 export const browser = {
   versions: (function() {
@@ -34,4 +26,35 @@ export const browser = {
     };
   })(),
   language: (navigator.browserLanguage || navigator.language).toLowerCase()
+};
+
+// 3、登录
+// 用户localStorage变量名
+export const storageNameUser = "user_xxxxxx_platform";
+// 权限菜单当前父key localStorage变量名
+export const storageNameNavMenuPKey = "navmenupkey_xxxxxx_platform";
+// 权限菜单当前key localStorage变量名
+export const storageNameNavMenuKey = "navmenukey_xxxxxx_platform";
+
+// 4、UI
+// 播放器插件地址
+
+// 上传图片类型
+export const imgAccept = "image/png,image/jpg,image/jpeg";
+// 上传图标类型
+export const iconAccept = "image/png";
+// 图片规格
+export const imgModal = {
+  // 通用
+  normal: "normal",
+  // 1寸登记照
+  photoone: "photoone",
+  // 身份证
+  card: "card",
+  // 营业执照
+  businesslicense: "businesslicense",
+  // 头像
+  avatar: "avatar",
+  // 图标
+  icon: "icon"
 };

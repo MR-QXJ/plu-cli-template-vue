@@ -51,7 +51,8 @@
       "parser": "babel-eslint"
     },
     "globals": {
-      "echarts": true
+      "echarts": true,
+      "plus": true
     }
   },
   "browserslist": [
