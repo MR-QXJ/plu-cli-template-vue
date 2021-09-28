@@ -1,58 +1,17 @@
-/*
- * 公共样式
- */
-
-// rem适配
-// 计算rem的基准字体
-$rem-base-font-size: 32px;
-// UI设计图的分辨率宽度
-$UI-resolution-width: 1920px;
-// 需要适配的屏幕宽度
-$device-widths: 1024px, 1280px, 1366px, 1440px, 1600px, 1920px;
-// 根据不同设备的屏幕宽度，定义html的基准font-size
-@mixin html-font-size() {
-  @each $current-width in $device-widths {
-    @media (min-width: $current-width) {
-      html {
-        $x: $UI-resolution-width / $current-width;  // 计算出是几倍屏
-        font-size: $rem-base-font-size / $x;
-      }
-    }
-  }
-}
-// 将设计图标注的px尺寸，转换为相应的rem
-@function pxTorem($px) {
-  @return $px / $rem-base-font-size * 1rem;
-}
-
-// 颜色
-$color-white: #ffffff;
-$color-black: #000000;
-$color-primary: #171a1e;
-$color-background: #eaeaea;
-$color-border: #d9d9d9;
-$color-form-title: #053f59;
-$color-font1: #333333;
-$color-font2: #666666;
-$color-font3: #999999;
-$color-success: #4cc2a5;
-$color-fail: #fc6766;
-
-// 通用样式
-// 全局
 @mixin common {
   * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -ms-box-sizing: border-box;
+    font-family: "NSimSun", "Microsoft YaHei", "Helvetica Neue", Helvetica,
+      "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
   }
 }
-
 // a标签
 @mixin a-common {
   a {
@@ -70,7 +29,6 @@ $color-fail: #fc6766;
     text-decoration: none;
   }
 }
-
 // input
 @mixin input-common {
   input {
@@ -83,42 +41,16 @@ $color-fail: #fc6766;
     display: none;
   }
 }
-
 // ul
 @mixin ul-common {
-  ul {
+  ul,
+  li {
     list-style: none;
   }
 }
 
-// 通用方法
-// 背景
-/*
- * 背景
- * @param $img 图片目录文件名
- * @param $posX 位置x
- * @param $posY 位置y
- * @param $path 相对目录
- */
-@mixin bg($img, $posX, $posY, $path: "../") {
-  background: url(#{$path}assets/imgs/#{$img}) no-repeat $posX $posY;
-}
-
-/*
- * 背景（背景色）
- * @param $img 图片目录文件名
- * @param $posX 位置x
- * @param $posY 位置y
- * @param $path 相对目录
- */
-@mixin bg-color($color, $img, $posX, $posY, $path: "../") {
-  background: $color url(#{$path}assets/imgs/#{$img}) no-repeat $posX $posY;
-}
-
-// 文本
 /*
  * 文本显示不完显示...
- * @param
  */
 @mixin text-ellipsis {
   text-overflow: ellipsis;
@@ -127,8 +59,7 @@ $color-fail: #fc6766;
 }
 
 /*
- * 文本显示不完显示...
- * @param
+ * 文本显示不完显示...(自定义显示多少行)
  */
 @mixin texts-ellipsis($rows) {
   display: -webkit-box;
@@ -138,137 +69,168 @@ $color-fail: #fc6766;
   -webkit-line-clamp: #{$rows};
   overflow: hidden;
 }
+
 /*
  * 滑动动效
  * @param
  *
 */
-@mixin slideX{
+@mixin slideX {
   position: absolute;
   right: 0;
   top: 0;
+  opacity: 0;
   transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  -o-transform: translateX(100%);
+  -ms-transform: translateX(100%);
   transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -moz-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -webkit-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -o-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  &.slide-in{
+  -ms-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
+  &.slide-in {
     transform: translateX(0%);
-    z-index: 20;
+    -moz-transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    -o-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    opacity: 1;
+    z-index: 3;
   }
 }
-@mixin slideX-reverse{
+@mixin slideX-reverse {
   position: absolute;
   right: 0;
   top: 0;
+  opacity: 0;
   transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
   transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -moz-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -webkit-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -o-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  &.slide-in{
+  &.slide-in {
     transform: translateX(0%);
-    z-index: 20;
+    -moz-transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    -o-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    opacity: 1;
+    z-index: 3;
   }
 }
-@mixin slideY{
+@mixin slideY {
   opacity: 0;
   position: absolute;
   right: 0;
   top: 0;
   transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
   transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -moz-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -webkit-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -o-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  &.slide-in{
-    opacity: 1;
+  &.slide-in {
     transform: translateY(0%);
-    z-index: 20;
+    -moz-transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    opacity: 1;
+    z-index: 3;
   }
 }
-@mixin slideY-reverse{
+@mixin slideY-reverse {
   opacity: 0;
   position: absolute;
   right: 0;
   top: 0;
   transform: translateY(100%);
+  -moz-transform: translateY(100%);
+  -webkit-transform: translateY(100%);
+  -o-transform: translateY(100%);
+  -ms-transform: translateY(100%);
   transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -moz-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -webkit-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
   -o-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  &.slide-in{
+  &.slide-in {
     opacity: 1;
     transform: translateY(0%);
-    z-index: 20;
+    -moz-transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    z-index: 3;
   }
 }
-/* animate.css
-* 一些简单的动效
+
+/*
+ *无数据
 */
-//swing
-@mixin animate-swing($speed){
-  -webkit-transform-origin: top center;
-  transform-origin: top center;
-  -webkit-animation-name: swing;
-  animation-name: swing;
-
-  -webkit-animation-duration: $speed;
-  animation-duration:  $speed;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-@keyframes swing {
-  20% {
-    -webkit-transform: rotate3d(0, 0, 1, 15deg);
-    transform: rotate3d(0, 0, 1, 15deg);
-  }
-
-  40% {
-    -webkit-transform: rotate3d(0, 0, 1, -10deg);
-    transform: rotate3d(0, 0, 1, -10deg);
-  }
-
-  60% {
-    -webkit-transform: rotate3d(0, 0, 1, 5deg);
-    transform: rotate3d(0, 0, 1, 5deg);
-  }
-
-  80% {
-    -webkit-transform: rotate3d(0, 0, 1, -5deg);
-    transform: rotate3d(0, 0, 1, -5deg);
-  }
-
-  to {
-    -webkit-transform: rotate3d(0, 0, 1, 0deg);
-    transform: rotate3d(0, 0, 1, 0deg);
+@mixin page-none-data {
+  .none-data {
+    font-size: 10px;
+    color: #bbb;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
-//pulse
-@mixin animate-pulse($speed) {
-  -webkit-animation-name: pulse;
-  animation-name: pulse;
-  -webkit-animation-timing-function: ease-in-out;
-  animation-timing-function: ease-in-out;
+// <template>
+//   <div class="h100 w100 home">
+//     <!-- 欢迎来到<span class="title">He-Cli！！</span> -->
+//     <Echart :chartOpt="opt" />
+//   </div>
+// </template>
 
-  -webkit-animation-duration: $speed;
-  animation-duration:  $speed;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-@keyframes pulse {
-  from {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-  }
+// <script>
+// import Echart from "components/pub/Echart";
+// export default {
+//   components: {
+//     Echart
+//   },
+//   data() {
+//     return {
+//       opt: {
+//         xAxis: {
+//           type: "category",
+//           data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+//         },
+//         yAxis: {
+//           type: "value"
+//         },
+//         series: [
+//           {
+//             data: [150, 230, 224, 218, 135, 147, 260],
+//             type: "line"
+//           }
+//         ]
+//       }
+//     };
+//   }
+// };
+// </script>
 
-  50% {
-    -webkit-transform: scale3d(0.9, 0.9, 0.9);
-    transform: scale3d(0.9, 0.9, 0.9);
-  }
-
-  to {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-  }
-}
+// <style lang="scss" scoped>
+// .home {
+//   height: 500px;
+//   line-height: 500px;
+//   text-align: center;
+//   font-size: 30px;
+//   .title {
+//     font-style: italic;
+//     font-weight: 700;
+//     color: #00bbe4;
+//   }
+// }
+// </style>

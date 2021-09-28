@@ -1,6 +1,4 @@
 const path = require("path");
-const webpack = require("webpack");
-// webpack压缩插件，此插件打包时会引起vue-svg-loader报错
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 // 是否为生产环境
@@ -11,11 +9,9 @@ const devNeedCdn = true;
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
-// 打包使用cdn
+// cdn链接
 const cdn = {
-  // 已使用cdn的不需要打包
   externals: {
-    echarts: "echarts",
     vue: "Vue",
     "vue-router": "VueRouter",
     vuex: "Vuex",
@@ -32,8 +28,6 @@ const cdn = {
   ]
 };
 
-const CompressionWebpackPlugin = require("compression-webpack-plugin");
-// const timeStamp = new Date().getTime();
 module.exports = {
   // 基础路径
   publicPath: "./",
@@ -41,12 +35,11 @@ module.exports = {
   outputDir: process.env.outputDir || "dist",
   // 资源目录
   assetsDir: "static",
-  productionSourceMap: false,
   // webpack 配置
   chainWebpack: config => {
-    // 目录命名
     config.resolve.alias
       .set("@", resolve("src"))
+      .set("mixins", resolve("src/mixins"))
       .set("assets", resolve("src/assets"))
       .set("network", resolve("src/network"))
       .set("request", resolve("src/network/request"))
@@ -60,38 +53,20 @@ module.exports = {
     });
   },
   configureWebpack: config => {
-    // moment压缩
-    config.plugins.push(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/));
-
     // 用cdn方式引入，则构建时要忽略相关资源
     if (isProduction || devNeedCdn) config.externals = cdn.externals;
 
     if (isProduction) {
-      // 代码压缩
       config.plugins.push(
         new UglifyJsPlugin({
           uglifyOptions: {
-            //生产环境自动删除console
-            compress: {
-              drop_debugger: true,
-              drop_console: true,
-              pure_funcs: ["console.log"]
-            }
+            warnings: false,
+            drop_console: true, //console
+            drop_debugger: false
+            // pure_funcs: ['console.log']//移除consol
           },
-          sourceMap: false,
+          sourceMap: true,
           parallel: true
-        })
-      );
-      //gzip压缩
-      const productionGzipExtensions = ["html", "js", "css"];
-      config.plugins.push(
-        new CompressionWebpackPlugin({
-          filename: "[path].gz[query]",
-          algorithm: "gzip",
-          test: new RegExp("\\.(" + productionGzipExtensions.join("|") + ")$"),
-          threshold: 10240, // 只有大小大于该值的资源会被处理 10240
-          minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
-          deleteOriginalAssets: false // 删除原文件
         })
       );
     }
@@ -100,6 +75,16 @@ module.exports = {
     loaderOptions: {
       sass: {
         prependData: `@import "@/assets/css/common.scss";`
+      },
+      less: {
+        // vant自定义主题
+        modifyVars: {
+          // "checkbox-checked-icon-color": "#00ccd1",
+          // "checkbox-label-color": "#00a2a6",
+          // "checkbox-border-color": "#00ccd1",
+          "button-primary-background-color": "#00ccd1"
+        },
+        javascriptEnabled: true
       }
     }
   },
@@ -108,12 +93,12 @@ module.exports = {
     // 自动启动浏览器
     open: true,
     // 端口号
-    port: 8892,
+    port: 8080,
     // 代理
     proxy: {
       "/api": {
         // 本地测试
-        target: "http://183.230.162.215:9527",
+        target: "http://192.168.16.131:8898/zhxfgxpnapi",
         ws: true,
         changeOrigin: true,
         pathRewrite: {

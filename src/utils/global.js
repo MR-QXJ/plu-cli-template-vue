@@ -30,15 +30,13 @@ export const browser = {
 
 // 3、登录
 // 用户localStorage变量名
-export const storageNameUser = "user_hhofficeplatform";
+export const storageNameUser = "user_xxxxxx_platform";
 // 权限菜单当前父key localStorage变量名
-export const storageNameNavMenuPKey = "navmenupkey_hhofficeplatform";
+export const storageNameNavMenuPKey = "navmenupkey_xxxxxx_platform";
 // 权限菜单当前key localStorage变量名
-export const storageNameNavMenuKey = "navmenukey_hhofficeplatform";
+export const storageNameNavMenuKey = "navmenukey_xxxxxx_platform";
 
 // 4、UI
-// 消息提示时间
-export const durationMsg = 3;
 // 播放器插件地址
 
 // 上传图片类型

@@ -10,9 +10,13 @@ const SETNAVMENUKEY = (state, navMenuKey) => {
 const SETNAVMENUS = (state, navMenus) => {
   state._navMenus = navMenus;
 };
+const SETUSER = (state, user) => {
+  state._user = user;
+};
 
 export const mutations = {
   SETSYSNAME,
   SETNAVMENUKEY,
-  SETNAVMENUS
+  SETNAVMENUS,
+  SETUSER
 };

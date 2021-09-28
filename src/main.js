@@ -1,53 +1,36 @@
-/*
- * 入口js
- */
-
-import "@babel/polyfill";
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./router";
 import store from "./store";
-// 注册Element-UI
-import initElement from "utils/use-element";
-Vue.use(initElement);
+import router from "./router";
 
-// 全局注册组件
-import { storageNameUser } from "@/utils/global";
+import vant from "utils/use-vant";
+Vue.use(vant);
 
 Vue.config.productionTip = false;
 
-// 自定义指令-更改标题
-Vue.directive("title", {
-  inserted: function(el, binding) {
-    document.title = binding.value;
-  }
-});
-
-router.beforeEach((to, from, next) => {
-  //路由带有requiresAuth元数据
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    //保存导航菜单key
-    if (to.query._navMenuKey) {
-      store.dispatch("setNavMenuKey", to.query._navMenuKey);
-    }
-
-    const user = JSON.parse(
-      window.sessionStorage.getItem(storageNameUser) || "{}"
-    );
-    //检测token
-    const token = user.token || "";
-    if (token === "") {
-      return next({
-        path: "/"
-        // query: { redirect: to.fullPath }
-      });
-    }
-  }
-  next();
-});
-
 new Vue({
-  router,
+  data() {
+    return {
+      winH: 0, //窗口高(px)
+      winW: 0, //窗口宽(px)
+      barH: 0 //系统状态栏高度(px)
+    };
+  },
+  mounted() {
+    document.addEventListener(
+      "plusready",
+      () => {
+        //状态栏高度
+        this.barH = plus.navigator.getStatusbarHeight() + "px" || 0;
+      },
+      false
+    );
+    this.winH =
+      document.body.clientHeight || document.documentElement.clientHeight;
+    this.winW =
+      document.body.clientWidth || document.documentElement.clientWidth;
+  },
   store,
+  router,
   render: h => h(App)
 }).$mount("#app");

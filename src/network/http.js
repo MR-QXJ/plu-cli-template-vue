@@ -2,13 +2,11 @@
  * http请求类
  */
 import axios from "axios";
-import { message, Modal } from "ant-design-vue";
 import router from "@/router";
-
-import { storageNameUser, durationMsg } from "utils/global";
+import store from "@/store";
+import { toastFail, dialog } from "utils/tools/feedback";
+import { storageNameUser } from "utils/global";
 import { dataIsNullNumber } from "utils/tools/common";
-// import qs from "qs";
-
 // 请求超时
 const timeout = 30000;
 // token失效提示模态框
@@ -17,7 +15,7 @@ let modal = null;
 axios.interceptors.request.use(
   config => {
     const user = JSON.parse(
-      window.sessionStorage.getItem(storageNameUser) || "{}"
+      window.localStorage.getItem(storageNameUser) || "{}"
     );
     const token = user.token || "";
     if (token !== "") {
@@ -45,20 +43,7 @@ function checkStatus(response) {
   // 正常状态返回数据
   const code = response.status;
   const data = response.data;
-  const contentType = response.headers["content-type"];
-
   if (code === 200 || code === 304) {
-    if (
-      contentType == "text/html;charset=utf-8" ||
-      contentType == "application/pdf" ||
-      contentType == "application/vnd.ms-excel"
-    ) {
-      return {
-        code: 0,
-        data
-      };
-    }
-
     const code = dataIsNullNumber(data.code);
     if (code === 2) {
       // token失效
@@ -70,6 +55,7 @@ function checkStatus(response) {
     }
     return data;
   }
+  // 异常状态返回404,500错误等
   const codeMsg = {
     400: "错误请求",
     401: "服务器未授权的请求",
@@ -95,45 +81,28 @@ function checkStatus(response) {
 
 function checkCode(res) {
   const code = res.code;
-  const msg = res.message;
   // 统一处理错误信息
   if (code !== 0) {
     if (code === 2) {
       // token失效
       if (!modal) {
-        modal = Modal.warning({
-          title: "提醒",
-          content: `${msg}！`,
-          onOk: () => {
-            // 退出重新登录
-            const user = {
-              token: null,
-              userId: "",
-              userName: "未知用户",
-              realName: "未知姓名",
-              avatarImg: ""
-            };
-            Promise.resolve()
-              .then(() => {
-                window.sessionStorage.setItem(
-                  storageNameUser,
-                  JSON.stringify(user)
-                );
-              })
-              .then(() => {
-                modal.destroy();
-                modal = null;
-                router.push({
-                  path: "/login",
-                  query: { redirect: router.currentRoute.fullPath }
-                });
-                // location.reload();
-              });
-          }
+        modal = true;
+        dialog(
+          {
+            message: `${res.message}!`
+          },
+          "alert"
+        ).then(() => {
+          modal = null;
+          store.dispatch("clearUser");
+          router.replace({
+            path: "/"
+            // query: { redirect: router.currentRoute.fullPath }
+          });
         });
       }
     } else {
-      message.error(`${msg}！`, durationMsg);
+      toastFail(`${res.message}！`);
     }
   }
   return res;
@@ -156,22 +125,9 @@ export default {
       method: "post",
       url,
       params: params || {},
-      data: data || null,
+      data: data || { default: "default" },
       timeout: timeout,
       headers: headers || {}
-    })
-      .then(checkStatus)
-      .then(checkCode);
-  },
-  postDownload(url, data, params = null, headers = null) {
-    return axios({
-      method: "post",
-      url,
-      params: params || {},
-      data: data || null,
-      timeout: timeout,
-      headers: headers || {},
-      responseType: "blob"
     })
       .then(checkStatus)
       .then(checkCode);

@@ -1,85 +1,54 @@
-import { message, Modal, Notification } from "ant-design-vue";
-import { durationMsg } from "@/utils/global";
+import { Dialog, Toast } from "vant";
 
 /**
- * 消息提示
- * @param type 类型 - success、error、info、warning、warn、loading
- * @param msg 消息
- * @param duration 消失时间
- * @param key 提示唯一标识
+ * 弹出框
+ * @param type 类型 - alert、confirm，不传则为普通弹窗
+ * @param opt 配置
  */
-export function antMessage(type, msg, duration, key) {
-  const durationTime = duration !== undefined ? duration : durationMsg;
-  if (key) {
-    message[type]({ content: `${msg}！`, key, durationTime });
-  } else {
-    message[type](`${msg}！`, durationTime);
-  }
+export function dialog(opt, type) {
+  return type ? Dialog[type](opt) : Dialog(opt);
+}
+
+export function closeDialog() {
+  Dialog.close();
 }
 
 /**
- * 消息提示（模态框）
- * @param type 类型 - success、error、info、warning、confirm
- * @param title 标题
- * @param msg 消息
+ * 轻提示
+ * @param message 消息
+ * @param opts 其他配置
  */
-export function antModal(type, title, msg, ok) {
-  let ope = type;
-  if (!Modal[ope]) {
-    ope = "info";
-  }
-  const modal = Modal[ope]({
-    title: title,
-    content: `${msg}！`,
-    onOk: ok
-  });
-  return modal;
+export function toast(message, opts) {
+  Toast({ message, ...opts });
 }
 
 /**
- *消息提示(通知提醒框)
- * @param type 类型 - success、error、info、warning
- * @param title 标题
- * @param msg 消息
- * @param clickHandle 点击回调
+ * 成功提示
+ * @param message 消息
+ * @param opts 其他配置
  */
-export function antNotification(type, title, msg, clickHandle) {
-  let icon = {
-    class:
-      type == "info"
-        ? "info"
-        : type == "success"
-        ? "check-"
-        : type == "error"
-        ? "close"
-        : type == "warning"
-        ? "exclamation"
-        : "info",
-    color:
-      type == "info"
-        ? "#1890ff"
-        : type == "success"
-        ? "#52c41a"
-        : type == "error"
-        ? "#f5222d"
-        : type == "warning"
-        ? "#faad14"
-        : "#1890ff"
-  };
-  Notification.open({
-    message: title,
-    description: `${msg}`,
-    icon: h => {
-      return h("a-icon", {
-        style: {
-          color: `${icon.color}`
-        },
-        props: {
-          type: `${icon.class}-circle-o`,
-          size: "small"
-        }
-      });
-    },
-    onClick: clickHandle
-  });
+export function toastSuc(message, opts) {
+  Toast.success({ message, ...opts });
+}
+
+/**
+ * 失败提示
+ * @param message 消息
+ * @param opts 其他配置
+ */
+export function toastFail(message, opts) {
+  Toast.fail({ message, ...opts });
+}
+
+/**
+ * 加载
+ * @param message 消息
+ * @param opts 其他配置
+ */
+export function loading(message = "加载中...", opts) {
+  Toast.loading({ message, duration: 0, ...opts });
+}
+
+export function clearToast() {
+  Toast.clear();
 }

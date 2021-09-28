@@ -1,8 +1,8 @@
 <template>
-  <div class="page home">
-    <van-nav-bar title="首页" :border="false" />
+  <div class="page profile">
+    <van-nav-bar title="我的" :border="false" />
 
-    <main class="content">欢迎来到<span class="title">He-Cli！！</span></main>
+    <main class="content"><span class="title">Profile</span></main>
 
     <BottomBar />
   </div>
@@ -23,7 +23,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.home {
+.profile {
   .content {
     height: 500px;
     line-height: 500px;

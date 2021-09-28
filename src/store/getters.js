@@ -1,8 +1,18 @@
 // getter
-import { storageNameNavMenuPKey, storageNameNavMenuKey } from "@/utils/global";
+import {
+  storageNameUser,
+  storageNameNavMenuPKey,
+  storageNameNavMenuKey
+} from "utils/global";
 
 const sys = state => {
   return state._sys;
+};
+const user = state => {
+  state._user = JSON.parse(
+    window.localStorage.getItem(storageNameUser) || "{}"
+  );
+  return state._user;
 };
 const navMenuPKey = state => {
   state._navMenuPKey = localStorage.getItem(storageNameNavMenuPKey) || "";
@@ -19,6 +29,7 @@ const navMenus = state => {
 };
 export const getters = {
   sys,
+  user,
   navMenuPKey,
   navMenuKey,
   navMenus

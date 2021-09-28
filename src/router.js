@@ -1,7 +1,6 @@
 /*
  * 路由
  */
-import Home from "@/views/Home";
 
 import Vue from "vue";
 import VueRouter from "vue-router";
@@ -27,27 +26,20 @@ const routes = files.keys().map(key => {
 export default new VueRouter({
   routes: [
     {
-      // 引导页
       path: "/",
-      name: "home",
-      component: Home,
-      meta: {
-        requiresAuth: false
-      }
+      name: "",
+      redirect: "/index"
     },
     {
-      // 404
-      path: "/notfound",
-      name: "notfound",
-      component: () => import("./views/NotFound.vue"),
-      meta: {
-        requiresAuth: false
-      }
+      path: "/index",
+      name: "index",
+      component: () => import("./views/Home.vue")
     },
-    ...routes,
     {
-      path: "*",
-      redirect: "/notfound"
-    }
+      path: "/profile",
+      name: "profile",
+      component: () => import("./views/Profile.vue")
+    },
+    ...routes
   ]
 });
