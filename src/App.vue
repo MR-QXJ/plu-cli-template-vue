@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { antModal } from "utils/tools/feedback";
+import { alert } from "utils/tools/feedback";
 
 export default {
   name: "app",
@@ -29,26 +29,19 @@ export default {
         document.body.clientWidth < 1024 || document.body.clientHeight < 600;
       if (this.showDisplayMinSizeNote) {
         if (!this.displayMsg) {
-          this.displayMsg = antModal(
-            "warning",
-            "提醒",
-            "为了您更好的体验，建议使用分辨率1024×600及以上浏览",
-            () => {
-              this.displayMsg.destroy();
-              this.displayMsg = null;
-            }
-          );
-        }
-      } else {
-        if (this.displayMsg) {
-          this.displayMsg.destroy();
-          this.displayMsg = null;
+          this.displayMsg = alert(
+            "为了您更好的体验，建议使用分辨率1024×600及以上浏览"
+          ).then(() => {
+            this.displayMsg = null;
+          });
         }
       }
     }
   },
   mounted() {
+    this.displayMinSize();
     window.onresize = this.displayMinSize;
+
     this.hideLoading();
   }
 };
@@ -63,9 +56,6 @@ export default {
 $color-scrollbar-thumb-bg: rgba(193, 193, 193, 0.6);
 .h100 {
   height: 100%;
-  &.ant-row {
-    height: 100% !important;
-  }
 }
 .w100 {
   width: 100%;
@@ -161,89 +151,5 @@ iframe::-webkit-scrollbar-track {
 iframe::-webkit-scrollbar-thumb {
   background-color: $color-scrollbar-thumb-bg;
   border-radius: 50px;
-}
-.ant-popover {
-  .anticon.anticon-exclamation-circle {
-    font-size: 18px;
-    top: 6px;
-  }
-}
-.ant-select-dropdown-menu {
-  max-height: 260px;
-}
-// antd输入框
-.ant-input-group-addon {
-  border-width: 0;
-}
-// 验证错误时
-.has-error .ant-input-group-addon {
-  background-color: #e8e8e8;
-
-  .icon {
-    color: rgba(0, 0, 0, 0.65);
-  }
-}
-.ant-input-group-addon-blue {
-  .ant-input-group-addon {
-    background-color: #37a7c9;
-  }
-  .has-error .ant-input-group-addon {
-    background-color: #37a7c9;
-  }
-}
-// antd按钮loading图标
-.anticon-loading-button {
-  color: $color-white;
-  font-size: 20px;
-  left: 50%;
-  margin-left: -10px;
-  margin-top: -10px;
-  position: absolute;
-  top: 50%;
-}
-// antd表格树loading图标
-.anticon-loading-tabletree {
-  color: $color-primary;
-  margin-right: 10px;
-}
-// antd输入框密码
-.ant-input-pass,
-.ant-input-group-pass .ant-input {
-  font-family: PasswordEntry;
-  ime-mode: disabled;
-  // -webkit-text-security: disc;
-}
-.ant-input-pass::-webkit-input-placeholder,
-.ant-input-group-pass .ant-input::-webkit-input-placeholder {
-  font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica,
-    "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
-}
-.ant-input-pass::-moz-input-placeholder,
-.ant-input-group-pass .ant-input::-moz-input-placeholder {
-  font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica,
-    "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
-}
-.ant-input-pass:-ms-input-placeholder,
-.ant-input-group-pass .ant-input::-ms-input-placeholder {
-  font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica,
-    "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
-}
-// antd输入框密码可见
-.ant-input-group-pass-text .ant-input {
-  ime-mode: disabled;
-}
-// antd表单查询无验证
-.ant-form-search-noverification {
-  .ant-form-item {
-    display: flex;
-    margin-bottom: 13px;
-  }
-  .ant-form-item-control-wrapper {
-    flex: 1;
-  }
-}
-//antd弹窗
-.ant-modal {
-  transition: width 0.3s, height 0.25s;
 }
 </style>

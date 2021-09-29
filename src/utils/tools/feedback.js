@@ -7,13 +7,12 @@ import { Loading, Message, MessageBox, Notification } from "element-ui";
  * @returns Message实例，可通过其close方法关闭动画
  */
 export function message(content, type = "info", opt) {
-  const msg = Message({
+  return Message({
     type,
     showClose: true,
     message: content,
     ...opt
   });
-  return msg;
 }
 
 /**
@@ -35,10 +34,10 @@ export function loading(opt) {
  * @param content 消息文字
  * @param title 标题
  * @param opt 覆盖配置
- * @returns 返回promise对象
+ * @returns promise<confirm>
  */
 export function alert(content, title = "提示", opt) {
-  return MessageBox(content, title, {
+  return MessageBox.alert(content, title, {
     type: "warning",
     ...opt
   }).catch(() => {});
@@ -48,7 +47,7 @@ export function alert(content, title = "提示", opt) {
  * @param content 消息文字
  * @param title 标题
  * @param opt 覆盖配置
- * @returns 返回promise对象
+ * @returns promise<confirm>
  */
 export function confirm(content, title = "提示", opt) {
   return MessageBox.confirm(content, title, {
@@ -61,7 +60,7 @@ export function confirm(content, title = "提示", opt) {
  * @param content 消息文字
  * @param title 标题
  * @param opt 覆盖配置
- * @returns 返回promise对象
+ * @returns promise<confirm>
  */
 export function prompt(content, title = "注意", opt) {
   return MessageBox.prompt(content, title, {
@@ -77,7 +76,7 @@ export function prompt(content, title = "注意", opt) {
 /**
  * @param message 消息文字
  * @param opt 覆盖配置
- * @returns 返回promise对象
+ * @returns
  */
 export function notify(message, opt) {
   Notification({
