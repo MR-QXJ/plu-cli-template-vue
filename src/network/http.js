@@ -2,11 +2,12 @@
  * http请求类
  */
 import axios from "axios";
-import { message, Modal } from "ant-design-vue";
 import router from "@/router";
 
-import { storageNameUser, durationMsg } from "utils/global";
+import { storageNameUser } from "utils/global";
 import { dataIsNullNumber } from "utils/tools/common";
+import { message, alert } from "utils/tools/feedback";
+
 // import qs from "qs";
 
 // 请求超时
@@ -101,79 +102,76 @@ function checkCode(res) {
     if (code === 2) {
       // token失效
       if (!modal) {
-        modal = Modal.warning({
-          title: "提醒",
-          content: `${msg}！`,
-          onOk: () => {
-            // 退出重新登录
-            const user = {
-              token: null,
-              userId: "",
-              userName: "未知用户",
-              realName: "未知姓名",
-              avatarImg: ""
-            };
-            Promise.resolve()
-              .then(() => {
-                window.sessionStorage.setItem(
-                  storageNameUser,
-                  JSON.stringify(user)
-                );
-              })
-              .then(() => {
-                modal.destroy();
-                modal = null;
-                router.push({
-                  path: "/login",
-                  query: { redirect: router.currentRoute.fullPath }
-                });
-                // location.reload();
+        modal = alert(`${msg}！`).then(confirm => {
+          if (!confirm) return;
+          // 退出重新登录
+          const user = {
+            token: null,
+            userId: "",
+            userName: "未知用户",
+            realName: "未知姓名",
+            avatarImg: ""
+          };
+          Promise.resolve()
+            .then(() => {
+              window.sessionStorage.setItem(
+                storageNameUser,
+                JSON.stringify(user)
+              );
+            })
+            .then(() => {
+              modal.destroy();
+              modal = null;
+              router.push({
+                path: "/login",
+                query: { redirect: router.currentRoute.fullPath }
               });
-          }
+              // location.reload();
+            });
         });
       }
     } else {
-      message.error(`${msg}！`, durationMsg);
+      message(`${msg}！`, "error");
     }
   }
   return res;
 }
 
-export default {
-  get(url, params, headers = null) {
-    return axios({
-      method: "get",
-      url,
-      params,
-      timeout: timeout,
-      headers: headers || {}
-    })
-      .then(checkStatus)
-      .then(checkCode);
-  },
-  post(url, data, params = null, headers = null) {
-    return axios({
-      method: "post",
-      url,
-      params: params || {},
-      data: data || null,
-      timeout: timeout,
-      headers: headers || {}
-    })
-      .then(checkStatus)
-      .then(checkCode);
-  },
-  postDownload(url, data, params = null, headers = null) {
-    return axios({
-      method: "post",
-      url,
-      params: params || {},
-      data: data || null,
-      timeout: timeout,
-      headers: headers || {},
-      responseType: "blob"
-    })
-      .then(checkStatus)
-      .then(checkCode);
-  }
-};
+function get(url, params, headers = null) {
+  return axios({
+    method: "get",
+    url,
+    params,
+    timeout: timeout,
+    headers: headers || {}
+  })
+    .then(checkStatus)
+    .then(checkCode);
+}
+function post(url, data, params = null, headers = null) {
+  return axios({
+    method: "post",
+    url,
+    params: params || {},
+    data: data || null,
+    timeout: timeout,
+    headers: headers || {}
+  })
+    .then(checkStatus)
+    .then(checkCode);
+}
+function postDownload(url, data, params = null, headers = null) {
+  return axios({
+    method: "post",
+    url,
+    params: params || {},
+    data: data || null,
+    timeout: timeout,
+    headers: headers || {},
+    responseType: "blob"
+  })
+    .then(checkStatus)
+    .then(checkCode);
+}
+
+export { get, post, postDownload };

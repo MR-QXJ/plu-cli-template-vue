@@ -1,4 +1,4 @@
-import http from "network/http";
+import { post } from "network/http";
 import { URL } from "utils/global";
 /*
  * 接口定义
@@ -50,6 +50,6 @@ export const GETPROJECT = `${COMMON}/api/common/codeValue/search/getProjectList`
 
 // 获取权限菜单
 export async function getPowerFuns(data, params) {
-  const res = await http.post(`${URL}${GETPOWERFUNS}`, data, params);
+  const res = await post(`${URL}${GETPOWERFUNS}`, data, params);
   return res;
 }

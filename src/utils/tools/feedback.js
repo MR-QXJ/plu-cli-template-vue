@@ -1,85 +1,89 @@
-import { message, Modal, Notification } from "ant-design-vue";
-import { durationMsg } from "@/utils/global";
+import { Loading, Message, MessageBox, Notification } from "element-ui";
 
 /**
- * 消息提示
- * @param type 类型 - success、error、info、warning、warn、loading
- * @param msg 消息
- * @param duration 消失时间
- * @param key 提示唯一标识
+ * @param content 消息文字
+ * @param type 主题 - success/warning/info/error
+ * @param opt 覆盖配置
+ * @returns Message实例，可通过其close方法关闭动画
  */
-export function antMessage(type, msg, duration, key) {
-  const durationTime = duration !== undefined ? duration : durationMsg;
-  if (key) {
-    message[type]({ content: `${msg}！`, key, durationTime });
-  } else {
-    message[type](`${msg}！`, durationTime);
-  }
-}
-
-/**
- * 消息提示（模态框）
- * @param type 类型 - success、error、info、warning、confirm
- * @param title 标题
- * @param msg 消息
- */
-export function antModal(type, title, msg, ok) {
-  let ope = type;
-  if (!Modal[ope]) {
-    ope = "info";
-  }
-  const modal = Modal[ope]({
-    title: title,
-    content: `${msg}！`,
-    onOk: ok
+export function message(content, type = "info", opt) {
+  const msg = Message({
+    type,
+    showClose: true,
+    message: content,
+    ...opt
   });
-  return modal;
+  return msg;
 }
 
 /**
- *消息提示(通知提醒框)
- * @param type 类型 - success、error、info、warning
- * @param title 标题
- * @param msg 消息
- * @param clickHandle 点击回调
+ *
+ * @param opt 覆盖配置
+ * @returns loading实例，可通过其close方法关闭动画
  */
-export function antNotification(type, title, msg, clickHandle) {
-  let icon = {
-    class:
-      type == "info"
-        ? "info"
-        : type == "success"
-        ? "check-"
-        : type == "error"
-        ? "close"
-        : type == "warning"
-        ? "exclamation"
-        : "info",
-    color:
-      type == "info"
-        ? "#1890ff"
-        : type == "success"
-        ? "#52c41a"
-        : type == "error"
-        ? "#f5222d"
-        : type == "warning"
-        ? "#faad14"
-        : "#1890ff"
-  };
-  Notification.open({
-    message: title,
-    description: `${msg}`,
-    icon: h => {
-      return h("a-icon", {
-        style: {
-          color: `${icon.color}`
-        },
-        props: {
-          type: `${icon.class}-circle-o`,
-          size: "small"
-        }
-      });
-    },
-    onClick: clickHandle
+export function loading(opt) {
+  return Loading.service({
+    lock: true,
+    text: "Loading",
+    // spinner: 'el-icon-loading',
+    background: "rgba(0, 0, 0, 0.7)",
+    ...opt
+  });
+}
+
+/**
+ * @param content 消息文字
+ * @param title 标题
+ * @param opt 覆盖配置
+ * @returns 返回promise对象
+ */
+export function alert(content, title = "提示", opt) {
+  return MessageBox(content, title, {
+    type: "warning",
+    ...opt
+  }).catch(() => {});
+}
+
+/**
+ * @param content 消息文字
+ * @param title 标题
+ * @param opt 覆盖配置
+ * @returns 返回promise对象
+ */
+export function confirm(content, title = "提示", opt) {
+  return MessageBox.confirm(content, title, {
+    type: "warning",
+    ...opt
+  }).catch(() => {});
+}
+
+/**
+ * @param content 消息文字
+ * @param title 标题
+ * @param opt 覆盖配置
+ * @returns 返回promise对象
+ */
+export function prompt(content, title = "注意", opt) {
+  return MessageBox.prompt(content, title, {
+    type: "info",
+    ...opt
+  })
+    .then(({ value }) => {
+      return value && value.trim();
+    })
+    .catch(() => {});
+}
+
+/**
+ * @param message 消息文字
+ * @param opt 覆盖配置
+ * @returns 返回promise对象
+ */
+export function notify(message, opt) {
+  Notification({
+    title: "提示",
+    type: "info",
+    message,
+    ...opt
   });
 }

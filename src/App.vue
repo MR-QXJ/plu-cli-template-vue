@@ -1,8 +1,8 @@
 // 入口页
 <template>
-    <div class="h100 w100" id="app">
-      <router-view ref="child" />
-    </div>
+  <div class="h100 w100" id="app">
+    <router-view ref="child" />
+  </div>
 </template>
 
 <script>
@@ -12,8 +12,6 @@ export default {
   name: "app",
   data() {
     return {
-      // 本地化语言
-      locale: zhCN,
       // 初始显示最小浏览尺寸提示
       showDisplayMinSizeNote: false,
       // 最小浏览尺寸提示框实例

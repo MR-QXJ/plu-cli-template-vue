@@ -37,9 +37,6 @@ export const storageNameNavMenuPKey = "navmenupkey_hhofficeplatform";
 export const storageNameNavMenuKey = "navmenukey_hhofficeplatform";
 
 // 4、UI
-// 消息提示时间
-export const durationMsg = 3;
-// 播放器插件地址
 
 // 上传图片类型
 export const imgAccept = "image/png,image/jpg,image/jpeg";
