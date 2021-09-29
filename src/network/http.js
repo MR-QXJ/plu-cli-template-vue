@@ -139,41 +139,45 @@ function checkCode(res) {
   return res;
 }
 
+function get(url, params, headers = null) {
+  return axios({
+    method: "get",
+    url,
+    params,
+    timeout: timeout,
+    headers: headers || {}
+  })
+    .then(checkStatus)
+    .then(checkCode);
+}
+function post(url, data, params = null, headers = null) {
+  return axios({
+    method: "post",
+    url,
+    params: params || {},
+    data: data || null,
+    timeout: timeout,
+    headers: headers || {}
+  })
+    .then(checkStatus)
+    .then(checkCode);
+}
+function postDownload(url, data, params = null, headers = null) {
+  return axios({
+    method: "post",
+    url,
+    params: params || {},
+    data: data || null,
+    timeout: timeout,
+    headers: headers || {},
+    responseType: "blob"
+  })
+    .then(checkStatus)
+    .then(checkCode);
+}
+
 export default {
-  get(url, params, headers = null) {
-    return axios({
-      method: "get",
-      url,
-      params,
-      timeout: timeout,
-      headers: headers || {}
-    })
-      .then(checkStatus)
-      .then(checkCode);
-  },
-  post(url, data, params = null, headers = null) {
-    return axios({
-      method: "post",
-      url,
-      params: params || {},
-      data: data || null,
-      timeout: timeout,
-      headers: headers || {}
-    })
-      .then(checkStatus)
-      .then(checkCode);
-  },
-  postDownload(url, data, params = null, headers = null) {
-    return axios({
-      method: "post",
-      url,
-      params: params || {},
-      data: data || null,
-      timeout: timeout,
-      headers: headers || {},
-      responseType: "blob"
-    })
-      .then(checkStatus)
-      .then(checkCode);
-  }
+  get,
+  post,
+  postDownload
 };

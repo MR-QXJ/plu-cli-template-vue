@@ -53,7 +53,9 @@ export default {
     }
   },
   mounted() {
+    this.displayMinSize();
     window.onresize = this.displayMinSize;
+
     this.hideLoading();
   }
 };

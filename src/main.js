@@ -16,8 +16,6 @@ import { storageNameUser } from "@/utils/global";
 
 Vue.config.productionTip = false;
 
-import "moment/locale/zh-cn";
-
 // 自定义指令-更改标题
 Vue.directive("title", {
   inserted: function(el, binding) {
