@@ -1,5 +1,4 @@
 import { message, Modal, Notification } from "ant-design-vue";
-import { durationMsg } from "@/utils/global";
 
 /**
  * 消息提示
@@ -9,7 +8,7 @@ import { durationMsg } from "@/utils/global";
  * @param key 提示唯一标识
  */
 export function antMessage(type, msg, duration, key) {
-  const durationTime = duration !== undefined ? duration : durationMsg;
+  const durationTime = duration !== undefined ? duration : 3;
   if (key) {
     message[type]({ content: `${msg}！`, key, durationTime });
   } else {
@@ -20,18 +19,21 @@ export function antMessage(type, msg, duration, key) {
 /**
  * 消息提示（模态框）
  * @param type 类型 - success、error、info、warning、confirm
- * @param title 标题
- * @param msg 消息
+ * @param msg 消息内容
+ * @param ok 确认回调
+ * @param opts 配置覆盖
  */
-export function antModal(type, title, msg, ok) {
+export function antModal(type, msg, ok, opts) {
   let ope = type;
   if (!Modal[ope]) {
     ope = "info";
   }
   const modal = Modal[ope]({
-    title: title,
+    title: "提示",
     content: `${msg}！`,
-    onOk: ok
+    closable: true,
+    onOk: ok,
+    ...opts
   });
   return modal;
 }

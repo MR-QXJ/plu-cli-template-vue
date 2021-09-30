@@ -2,11 +2,12 @@
  * http请求类
  */
 import axios from "axios";
-import { message, Modal } from "ant-design-vue";
 import router from "@/router";
 
-import { storageNameUser, durationMsg } from "utils/global";
+import { storageNameUser } from "utils/global";
 import { dataIsNullNumber } from "utils/tools/common";
+import { antMessage, antModal } from "utils/tools/feedback";
+
 // import qs from "qs";
 
 // 请求超时
@@ -101,10 +102,10 @@ function checkCode(res) {
     if (code === 2) {
       // token失效
       if (!modal) {
-        modal = Modal.warning({
-          title: "提醒",
-          content: `${msg}！`,
-          onOk: () => {
+        modal = antModal(
+          "warning",
+          `${msg}！`,
+          () => {
             // 退出重新登录
             const user = {
               token: null,
@@ -129,11 +130,12 @@ function checkCode(res) {
                 });
                 // location.reload();
               });
-          }
-        });
+          },
+          { closable: false, keyboard: false } //隐藏关闭按钮，禁止键盘Esc关闭
+        );
       }
     } else {
-      message.error(`${msg}！`, durationMsg);
+      antMessage("error", `${msg}！`);
     }
   }
   return res;
