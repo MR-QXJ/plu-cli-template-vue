@@ -36,7 +36,6 @@ export default {
         if (!this.displayMsg) {
           this.displayMsg = antModal(
             "warning",
-            "提醒",
             "为了您更好的体验，建议使用分辨率1024×600及以上浏览",
             () => {
               this.displayMsg.destroy();
