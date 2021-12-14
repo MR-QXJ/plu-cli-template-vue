@@ -9,7 +9,7 @@
 
 <script>
 import zhCN from "ant-design-vue/lib/locale-provider/zh_CN";
-import { antModal } from "utils/tools/feedback";
+import { antModal } from "utils/feedback";
 
 export default {
   name: "app",

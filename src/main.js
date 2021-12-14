@@ -8,11 +8,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 // 注册ant-design-vue
-import initAntd from "utils/use-antd";
+import initAntd from "configs/use-antd";
 Vue.use(initAntd);
 
 // 全局注册组件
-import { storageNameUser } from "@/utils/global";
+import { storageNameUser } from "configs/global";
 
 Vue.config.productionTip = false;
 

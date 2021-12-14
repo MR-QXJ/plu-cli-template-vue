@@ -9,7 +9,7 @@ import { actions } from "./actions";
 //   storageNameNavMenuKey,
 //   storageNameFireAlarmId,
 //   storageNameDigitalUnitId
-// } from "@/utils/global";
+// } from "@/configs/global";
 
 Vue.use(Vuex);
 

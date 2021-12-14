@@ -1,4 +1,4 @@
-import { imgAccept, iconAccept } from "utils/global";
+import { imgAccept, iconAccept } from "configs/global";
 
 /*
  * 验证图片类型

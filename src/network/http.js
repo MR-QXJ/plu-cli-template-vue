@@ -4,9 +4,9 @@
 import axios from "axios";
 import router from "@/router";
 
-import { storageNameUser } from "utils/global";
-import { dataIsNullNumber } from "utils/tools/common";
-import { antMessage, antModal } from "utils/tools/feedback";
+import { storageNameUser } from "configs/global";
+import { dataIsNullNumber } from "utils/common";
+import { antMessage, antModal } from "utils/feedback";
 
 // import qs from "qs";
 
@@ -164,22 +164,8 @@ function post(url, data, params = null, headers = null) {
     .then(checkStatus)
     .then(checkCode);
 }
-function postDownload(url, data, params = null, headers = null) {
-  return axios({
-    method: "post",
-    url,
-    params: params || {},
-    data: data || null,
-    timeout: timeout,
-    headers: headers || {},
-    responseType: "blob"
-  })
-    .then(checkStatus)
-    .then(checkCode);
-}
 
 export default {
   get,
-  post,
-  postDownload
+  post
 };

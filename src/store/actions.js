@@ -1,5 +1,5 @@
 // actions
-import { storageNameNavMenuKey } from "@/utils/global";
+import { storageNameNavMenuKey } from "configs/global";
 
 const setSysName = ({ commit }, sysName) => {
   const name = sysName || "";

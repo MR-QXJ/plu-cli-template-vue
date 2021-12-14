@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import { initEchart } from "utils/tools/echart";
-import { GUID, debounce } from "utils/tools/common";
+import { initEchart } from "utils/echart";
+import { GUID, debounce } from "utils/common";
 
 export default {
   props: {
@@ -43,12 +43,24 @@ export default {
   data() {
     return {
       chartId: "echart",
-      echart: null,
-      //防抖方式resize图表，写在methods中不会被缓存生成闭包
-      resizeHandle: debounce(() => {
-        this.echart && this.echart.resize();
-      }, 200)
+      echart: null
     };
+  },
+  computed: {
+    //防抖方式resize图表，写在methods中不会被缓存生成闭包
+    resizeHandle() {
+      return debounce(() => {
+        this.echart && this.echart.resize();
+      }, 200);
+    }
+  },
+  watch: {
+    chartOpt: {
+      handler(to) {
+        this.echart.setOption(to);
+      },
+      deep: true
+    }
   },
   created() {
     this.chartId = `chart-${GUID()}`;
@@ -60,20 +72,11 @@ export default {
 
     if (!this.autoResize) return;
     //利用object标签监听宽度变化
-    this.$refs["objectRef"].contentDocument.defaultView.addEventListener(
-      "resize",
-      () => {
-        this.resizeHandle();
-      }
+    this.$refs[
+      "objectRef"
+    ].contentDocument.defaultView.addEventListener("resize", () =>
+      this.resizeHandle()
     );
-  },
-  watch: {
-    chartOpt: {
-      handler(to) {
-        this.echart.setOption(to);
-      },
-      deep: true
-    }
   }
 };
 </script>
