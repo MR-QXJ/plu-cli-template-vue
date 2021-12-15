@@ -12,7 +12,7 @@ import initAntd from "configs/use-antd";
 Vue.use(initAntd);
 
 // 全局注册组件
-import { storageNameUser } from "configs/global";
+import { storageNameUser } from "constants/global";
 
 Vue.config.productionTip = false;
 

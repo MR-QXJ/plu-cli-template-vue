@@ -1,5 +1,6 @@
 // ant-design-vue配置
 import {
+  ConfigProvider,
   Layout,
   Col,
   Row,
@@ -14,7 +15,9 @@ import {
   Empty
 } from "ant-design-vue";
 
+//需要use的组件
 const components = [
+  ConfigProvider,
   Layout,
   Menu,
   Spin,

@@ -28,7 +28,11 @@ export const browser = {
   language: (navigator.browserLanguage || navigator.language).toLowerCase()
 };
 
-// 3、登录
+// 3、路由
+// 主页
+export const routePathHome = "/";
+
+// 4、登录
 // 用户localStorage变量名
 export const storageNameUser = "user_hhofficeplatform";
 // 权限菜单当前父key localStorage变量名
@@ -36,7 +40,7 @@ export const storageNameNavMenuPKey = "navmenupkey_hhofficeplatform";
 // 权限菜单当前key localStorage变量名
 export const storageNameNavMenuKey = "navmenukey_hhofficeplatform";
 
-// 4、文件
+// 5、文件
 // 上传图片类型
 export const imgAccept = "image/png,image/jpg,image/jpeg";
 // 上传图标类型
@@ -56,3 +60,7 @@ export const imgModal = {
   // 图标
   icon: "icon"
 };
+
+//6、请求
+// 超时时间(30秒)
+export const apiTimeout = 30000;

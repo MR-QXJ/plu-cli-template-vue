@@ -2,18 +2,11 @@
  * http请求类
  */
 import axios from "axios";
+import qs from "qs";
 import router from "@/router";
 
-import { storageNameUser } from "configs/global";
-import { dataIsNullNumber } from "utils/common";
-import { antMessage, antModal } from "utils/feedback";
-
-// import qs from "qs";
-
-// 请求超时
-const timeout = 30000;
-// token失效提示模态框
-let modal = null;
+import { storageNameUser, apiTimeout as timeout } from "constants/global";
+import { antMessage } from "utils/feedback";
 
 axios.interceptors.request.use(
   config => {
@@ -25,6 +18,16 @@ axios.interceptors.request.use(
       // header传token
       config.headers.token = token;
     }
+    config.headers["content-type"] = "application/json;charset=utf-8";
+    config.headers["data-type"] = "json";
+
+    //get方式提交数组设置为repeat方式
+    if (config.method === "get") {
+      config.paramsSerializer = function(params) {
+        return qs.stringify(params, { arrayFormat: "repeat" });
+      };
+    }
+
     return config;
   },
   error => {
@@ -46,29 +49,8 @@ function checkStatus(response) {
   // 正常状态返回数据
   const code = response.status;
   const data = response.data;
-  const contentType = response.headers["content-type"];
 
   if (code === 200 || code === 304) {
-    if (
-      contentType == "text/html;charset=utf-8" ||
-      contentType == "application/pdf" ||
-      contentType == "application/vnd.ms-excel"
-    ) {
-      return {
-        code: 0,
-        data
-      };
-    }
-
-    const code = dataIsNullNumber(data.code);
-    if (code === 2) {
-      // token失效
-      return {
-        code,
-        message: "登录失效，请重新登录",
-        data: null
-      };
-    }
     return data;
   }
   const codeMsg = {
@@ -96,46 +78,27 @@ function checkStatus(response) {
 
 function checkCode(res) {
   const code = res.code;
-  const msg = res.message;
   // 统一处理错误信息
   if (code !== 0) {
+    let msg = `${
+      res.message ? res.message.replace(/!/g, "") : "系统繁忙，请稍后再试"
+    }！`;
+    antMessage("error", msg);
     if (code === 2) {
       // token失效
-      if (!modal) {
-        modal = antModal(
-          "warning",
-          `${msg}！`,
-          () => {
-            // 退出重新登录
-            const user = {
-              token: null,
-              userId: "",
-              userName: "未知用户",
-              realName: "未知姓名",
-              avatarImg: ""
-            };
-            Promise.resolve()
-              .then(() => {
-                window.sessionStorage.setItem(
-                  storageNameUser,
-                  JSON.stringify(user)
-                );
-              })
-              .then(() => {
-                modal.destroy();
-                modal = null;
-                router.push({
-                  path: "/login",
-                  query: { redirect: router.currentRoute.fullPath }
-                });
-                // location.reload();
-              });
-          },
-          { closable: false, keyboard: false } //隐藏关闭按钮，禁止键盘Esc关闭
-        );
-      }
-    } else {
-      antMessage("error", `${msg}！`);
+      window.sessionStorage.setItem(storageNameUser, JSON.stringify(user));
+      // 退出重新登录
+      const user = {
+        token: null,
+        userId: "",
+        userName: "未知用户",
+        realName: "未知姓名",
+        avatarImg: ""
+      };
+      router.push({
+        path: "/login",
+        query: { redirect: router.currentRoute.fullPath }
+      });
     }
   }
   return res;
@@ -146,26 +109,23 @@ function get(url, params, headers = null) {
     method: "get",
     url,
     params,
-    timeout: timeout,
+    timeout,
     headers: headers || {}
   })
     .then(checkStatus)
     .then(checkCode);
 }
-function post(url, data, params = null, headers = null) {
+function post(url, data = null, params = {}, headers = {}) {
   return axios({
     method: "post",
     url,
-    params: params || {},
-    data: data || null,
-    timeout: timeout,
-    headers: headers || {}
+    params,
+    data,
+    timeout,
+    headers
   })
     .then(checkStatus)
     .then(checkCode);
 }
 
-export default {
-  get,
-  post
-};
+export { get, post };

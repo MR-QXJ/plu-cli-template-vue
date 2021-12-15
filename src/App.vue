@@ -1,18 +1,24 @@
 // 入口页
 <template>
   <a-config-provider :locale="locale">
+    <!-- 全局配置空状态 -->
+    <template #renderEmpty>
+      <empty-simple-image desc="暂无数据" />
+    </template>
     <div class="h100 w100" id="app">
-      <router-view ref="child" />
+      <router-view />
     </div>
   </a-config-provider>
 </template>
 
 <script>
 import zhCN from "ant-design-vue/lib/locale-provider/zh_CN";
+import EmptySimpleImage from "@/components/common/state/EmptySimpleImage.vue";
 import { antModal } from "utils/feedback";
 
 export default {
   name: "app",
+  components: { EmptySimpleImage },
   data() {
     return {
       // 本地化语言
@@ -20,13 +26,38 @@ export default {
       // 初始显示最小浏览尺寸提示
       showDisplayMinSizeNote: false,
       // 最小浏览尺寸提示框实例
-      displayMsg: null
+      displayMsg: null,
+      // 首屏加载动画关闭延时器
+      firstScreenLoadingCloseT: null
     };
   },
+  mounted() {
+    this.displayMinSize();
+    window.onresize = this.displayMinSize;
+
+    this.firstScreenLoadingClose();
+  },
+  beforeDestroy() {
+    this.firstScreenLoadingCloseStop();
+  },
   methods: {
-    // 隐藏页面初始化loading
-    hideLoading: function() {
-      document.getElementsByClassName("enter")[0].style.display = "none";
+    // 延时关闭首屏加载动画
+    firstScreenLoadingClose() {
+      this.firstScreenLoadingCloseT = setTimeout(() => {
+        let firstScreenLoading = document.getElementById("firstScreenLoading");
+        if (firstScreenLoading) {
+          document.body.removeChild(firstScreenLoading);
+          this.firstScreenLoadingCloseStop();
+        }
+        firstScreenLoading = null;
+      }, 1000);
+    },
+    // 延时关闭首屏加载动画停止
+    firstScreenLoadingCloseStop() {
+      if (this.firstScreenLoadingCloseT) {
+        clearTimeout(this.firstScreenLoadingCloseT);
+        this.firstScreenLoadingCloseT = null;
+      }
     },
     // 显示最小浏览尺寸提示
     displayMinSize: function() {
@@ -50,206 +81,210 @@ export default {
         }
       }
     }
-  },
-  mounted() {
-    this.displayMinSize();
-    window.onresize = this.displayMinSize;
-
-    this.hideLoading();
   }
 };
 </script>
 
 <style lang="scss">
-@include html-font-size();
 @include common;
-@include a-common;
-@include input-common;
-@include ul-common;
-$color-scrollbar-thumb-bg: rgba(193, 193, 193, 0.6);
-.h100 {
-  height: 100%;
-  &.ant-row {
-    height: 100% !important;
-  }
-}
-.w100 {
-  width: 100%;
-}
-.spin-loading {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-}
-//暂无数据通用
-.no-data-occupy {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #979797;
-  z-index: 5;
-}
+@include common-scroll;
+@include h100;
+@include w100;
+@include ant-collapse-header-background("#e9e9e9");
+@include ant-collapse-header-padding-top-bottom(5);
+
 [v-cloak] {
   display: none;
 }
-html,
-body {
-  color: $color-black;
-  font-size: 12px;
-  font-family: "SourceHanSansCN-Regular", "Helvetica Neue", Helvetica,
-    "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
-  height: 100%;
-  overflow: hidden;
-  width: 100%;
-}
-// 滚动条
-div::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
-}
-div::-webkit-scrollbar-track {
-  background-color: $color-white;
-}
-.nav::-webkit-scrollbar-track {
-  background-color: $color-background;
-}
-div::-webkit-scrollbar-thumb {
-  background-color: $color-scrollbar-thumb-bg;
-  border-radius: 50px;
-}
-ul {
-  margin-bottom: 0;
-}
-ul::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
-}
-ul::-webkit-scrollbar-track {
-  background-color: $color-white;
-}
-ul::-webkit-scrollbar-thumb {
-  background-color: $color-scrollbar-thumb-bg;
-  border-radius: 50px;
-}
-// 滚动条
-form::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
-}
-form::-webkit-scrollbar-track {
-  background-color: $color-white;
-}
-form::-webkit-scrollbar-thumb {
-  background-color: $color-scrollbar-thumb-bg;
-  border-radius: 50px;
-}
-textarea::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
-}
-textarea::-webkit-scrollbar-track {
-  background-color: $color-white;
-}
-textarea::-webkit-scrollbar-thumb {
-  background-color: $color-scrollbar-thumb-bg;
-  border-radius: 50px;
-}
-iframe::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
-}
-iframe::-webkit-scrollbar-track {
-  background-color: $color-white;
-}
-iframe::-webkit-scrollbar-thumb {
-  background-color: $color-scrollbar-thumb-bg;
-  border-radius: 50px;
-}
-.ant-popover {
-  .anticon.anticon-exclamation-circle {
-    font-size: 18px;
-    top: 6px;
-  }
-}
-.ant-select-dropdown-menu {
-  max-height: 260px;
-}
-// antd输入框
-.ant-input-group-addon {
-  border-width: 0;
-}
-// 验证错误时
-.has-error .ant-input-group-addon {
-  background-color: #e8e8e8;
 
-  .icon {
-    color: rgba(0, 0, 0, 0.65);
+body {
+  overflow: hidden;
+}
+
+// 设置antdv ui组件额外的主题（antdv ui不支持自定义的样式的组件）
+.ant-layout-header {
+  height: 60px;
+  line-height: 60px;
+  padding: 0 24px;
+}
+
+.ant-collapse-item-no-bordered {
+  border-bottom-width: 0 !important;
+}
+
+.ant-collapse-item-no-padding-both-sides {
+  .ant-collapse-content > .ant-collapse-content-box {
+    padding: 0 !important;
   }
 }
+
+.ant-collapse-item-disabled-same {
+  .ant-collapse-header,
+  .ant-collapse-header > .arrow {
+    color: rgba(0, 0, 0, 0.85) !important;
+  }
+}
+
+.ant-menu-inline,
+.ant-menu-vertical,
+.ant-menu-vertical-left {
+  border-right: 0 solid #e8e8e8 !important;
+}
+
+.ant-menu-vertical-right {
+  border-left: 0 solid #e8e8e8 !important;
+}
+
+.ant-menu-item-selected {
+  color: $color-white !important;
+}
+
+.ant-menu-inline .ant-menu-item-selected::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  z-index: 1;
+  display: block;
+  height: 0;
+  width: 0;
+  margin-top: -10px;
+  border: 10px solid $color-background;
+  border-left-width: 12px;
+  border-right-width: 12px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-top-color: transparent;
+}
+
+.ant-dropdown-menu-no-padding,
+.ant-dropdown-menu-submenu-no-padding {
+  .ant-dropdown-menu-item {
+    padding: 0 !important;
+  }
+}
+
+.ant-btn-link {
+  height: auto;
+  padding: 0;
+}
+
+.ant-list-item-nopadding {
+  padding: 4px 0;
+
+  .ant-list-item {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+.ant-table-fixed-left,
+.ant-table-fixed-right {
+  // 遮蔽input前后缀icon、table loading
+  z-index: 4;
+}
+
+.ant-table-td-edit-content {
+  .ant-form-item-required {
+    .star {
+      display: inline-block;
+      margin-right: 8px;
+      color: $color-error;
+    }
+    .has-error .ant-form-explain {
+      padding-left: 16px;
+    }
+  }
+}
+
+.ant-pagination-item {
+  line-height: 30px;
+}
+
+.ant-pagination-prev,
+.ant-pagination-next,
+.ant-pagination-jump-prev,
+.ant-pagination-jump-next {
+  line-height: 28px;
+}
+
+.ant-pagination-total-text,
+.ant-pagination-item,
+.ant-pagination-prev,
+.ant-pagination-next,
+.ant-pagination-jump-prev,
+.ant-pagination-jump-next,
+.ant-pagination-options {
+  margin-top: 15px;
+}
+
 .ant-input-group-addon-blue {
   .ant-input-group-addon {
-    background-color: #37a7c9;
-  }
-  .has-error .ant-input-group-addon {
-    background-color: #37a7c9;
+    border-width: 0;
+    color: $color-white;
+    background-color: $color-primary;
   }
 }
-// antd按钮loading图标
-.anticon-loading-button {
-  color: $color-white;
-  font-size: 20px;
-  left: 50%;
-  margin-left: -10px;
-  margin-top: -10px;
+
+.has-error {
+  .ant-input-group-addon-blue {
+    .ant-input-group-addon {
+      border-width: 0;
+      color: $color-white;
+      background-color: $color-primary;
+    }
+  }
+}
+
+.ant-modal-mask,
+.ant-drawer-mask {
+  border-radius: 4px;
+}
+
+.ant-modal-absolute {
   position: absolute;
-  top: 50%;
 }
-// antd表格树loading图标
-.anticon-loading-tabletree {
-  color: $color-primary;
-  margin-right: 10px;
+
+.image-uploader > .ant-upload,
+.image-uploader > .ant-upload img {
+  width: 128px;
+  height: 128px;
 }
-// antd输入框密码
-.ant-input-pass,
-.ant-input-group-pass .ant-input {
-  font-family: PasswordEntry;
-  ime-mode: disabled;
-  // -webkit-text-security: disc;
+
+.image-idcard-uploader {
+  height: 160px;
 }
-.ant-input-pass::-webkit-input-placeholder,
-.ant-input-group-pass .ant-input::-webkit-input-placeholder {
-  font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica,
-    "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+.image-idcard-uploader
+  .ant-upload.ant-upload-select-picture-card
+  > .ant-upload {
+  width: 180px;
+  height: 200px;
+  box-sizing: content-box;
 }
-.ant-input-pass::-moz-input-placeholder,
-.ant-input-group-pass .ant-input::-moz-input-placeholder {
-  font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica,
-    "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+.image-idcard-uploader .ant-upload {
+  width: 180px;
+  height: 200px;
 }
-.ant-input-pass:-ms-input-placeholder,
-.ant-input-group-pass .ant-input::-ms-input-placeholder {
-  font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica,
-    "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
+.image-idcard-uploader .ant-upload img {
+  width: 162px;
+  height: 180px;
 }
-// antd输入框密码可见
-.ant-input-group-pass-text .ant-input {
-  ime-mode: disabled;
+
+.ant-upload-select-picture-card i {
+  font-size: 32px;
+  color: $color-font-light;
 }
-// antd表单查询无验证
-.ant-form-search-noverification {
-  .ant-form-item {
-    display: flex;
-    margin-bottom: 13px;
-  }
-  .ant-form-item-control-wrapper {
-    flex: 1;
-  }
+
+.ant-upload-select-picture-card .ant-upload-text {
+  margin-top: 8px;
+  color: $color-font-medium;
 }
-//antd弹窗
-.ant-modal {
-  transition: width 0.3s, height 0.25s;
+
+#app {
+  overflow: hidden;
+}
+.table-row-value {
+  @include text-ellipsis;
+  display: block;
 }
 </style>

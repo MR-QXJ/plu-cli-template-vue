@@ -21,9 +21,9 @@ const cdn = {
     vuex: "Vuex",
     axios: "axios"
   },
-  // cdn的css链接
-  css: [],
-  // cdn的js链接
+  // 注入css链接
+  css: ["./assets/styles/first-screen/loading.css"],
+  // 注入js链接
   js: [
     "https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js",
     "https://cdn.bootcss.com/vue/2.6.10/vue.min.js",
@@ -53,7 +53,8 @@ module.exports = {
       .set("request", resolve("src/network/request"))
       .set("components", resolve("src/components"))
       .set("utils", resolve("src/utils"))
-      .set("configs", resolve("src/configs"));
+      .set("configs", resolve("src/configs"))
+      .set("constants", resolve("src/constants"));
 
     config.plugin("html").tap(args => {
       // 生产环境或者本地需要cdn时，才注入cdn
@@ -107,7 +108,7 @@ module.exports = {
       less: {
         // antd自定义主题
         modifyVars: {
-          "@primary-color": "#00b3aa",
+          "@primary-color": "#3eb3e6",
           "@body-background": "#eaeaea",
           // 按钮
           "@btn-default-bg": "#ffffff",
@@ -117,7 +118,7 @@ module.exports = {
           "@menu-bg": "#00474b",
           "@menu-popup-bg": "#00474b",
           "@menu-item-color": "#ffffff",
-          "@menu-item-active-bg": "#00b3aa",
+          "@menu-item-active-bg": "#3eb3e6",
           "@menu-item-active-border-width": "0px",
           "@menu-item-group-title-color": "#ffffff",
           // 表单
@@ -144,12 +145,12 @@ module.exports = {
     proxy: {
       "/api": {
         // 本地测试
-        target: "http://183.230.162.215:9527",
+        target: "http://183.230.162.215:8200",
         ws: true,
         changeOrigin: true,
         pathRewrite: {
           // 本地测试
-          "^/api": "/"
+          "^/api": ""
         }
       }
     }

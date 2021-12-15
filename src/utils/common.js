@@ -1,7 +1,6 @@
 /*
  * 工具类
  */
-import qs from "qs";
 
 /*
  * 生成GUID（UUID）
@@ -15,6 +14,18 @@ export function GUID() {
     const v = c == "x" ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
+}
+
+/*
+ * 获取类型
+ * @param obj 对象
+ */
+export function getType(obj) {
+  const toString = Object.prototype.toString;
+  if (obj instanceof Element) {
+    return "Element";
+  }
+  return toString.call(obj).slice(8, -1);
 }
 
 /*
@@ -128,30 +139,6 @@ export function jsonArraySort(arr, attrName, isAsc = true) {
 }
 
 /*
- * json数组去重
- * @param arr 数组
- * @param key 唯一属性名
- */
-export function removeRepeatArray(arr, key) {
-  let result = [];
-  for (let i = 0; i < arr.length; i++) {
-    let flag = true;
-    let temp = arr[i];
-    for (let j = 0; j < result.length; j++) {
-      // 普通数组 (temp === result[j])
-      if (temp[key] === result[j][key]) {
-        flag = false;
-        break;
-      }
-    }
-    if (flag) {
-      result.push(temp);
-    }
-  }
-  return result;
-}
-
-/*
  * 深度递归向上搜索
  * @param arr 你要搜索的数组
  * @param key 要搜索的key
@@ -204,61 +191,6 @@ export function deepFindFamilyUp(arr, key) {
   };
   // (item, index, level) => item.key === key
   return deepFind(arr, item => item.key === key, "children");
-}
-
-/*
- * 深度递归向下搜索节点（选择区域树用）
- * @param arr 你要搜索的数组
- * @param key 要搜索的key
- * @param value 要搜索的值
- */
-export function deepFindDown(arr, key, value) {
-  let res = null;
-  arr.map(item => {
-    if (!res) {
-      if (item[key] === value) {
-        res = item;
-      }
-      const children = dataIsNullArray(item.children);
-      if (children.length > 0) {
-        res = deepFindDown(children, key, value);
-      }
-    }
-  });
-  return res;
-}
-/*
- * 深度递归向下搜索节点(拿到就返回)
- * @param arr 你要搜索的数组
- * @param key 要搜索的key
- * @param value 要搜索的值
- */
-export function deepFindOnceDown(arr, key, value) {
-  let res = null;
-  arr.map(item => {
-    if (!res) {
-      if (item[key] === value) {
-        res = item;
-        return;
-      }
-      const children = dataIsNullArray(item.children);
-      if (children.length > 0) {
-        res = deepFindOnceDown(children, key, value);
-      }
-    }
-  });
-  return res;
-}
-
-// 参数序列化
-export function paramsSerializer(name, params, type = 1) {
-  switch (type) {
-    case 1: {
-      const arr = {};
-      arr[name] = params;
-      return qs.stringify(arr, { indices: false });
-    }
-  }
 }
 
 /**

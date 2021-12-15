@@ -1,45 +1,20 @@
-/*
- * 公共样式
- */
-
-// rem适配
-// 计算rem的基准字体
-$rem-base-font-size: 32px;
-// UI设计图的分辨率宽度
-$UI-resolution-width: 1920px;
-// 需要适配的屏幕宽度
-$device-widths: 1024px, 1280px, 1366px, 1440px, 1600px, 1920px;
-// 根据不同设备的屏幕宽度，定义html的基准font-size
-@mixin html-font-size() {
-  @each $current-width in $device-widths {
-    @media (min-width: $current-width) {
-      html {
-        $x: $UI-resolution-width / $current-width;  // 计算出是几倍屏
-        font-size: $rem-base-font-size / $x;
-      }
-    }
-  }
-}
-// 将设计图标注的px尺寸，转换为相应的rem
-@function pxTorem($px) {
-  @return $px / $rem-base-font-size * 1rem;
-}
-
-// 颜色
+// 颜色定义
+$color-primary: #3eb3e6;
 $color-white: #ffffff;
 $color-black: #000000;
-$color-primary: #171a1e;
 $color-background: #eaeaea;
 $color-border: #d9d9d9;
-$color-form-title: #053f59;
-$color-font1: #333333;
-$color-font2: #666666;
-$color-font3: #999999;
-$color-success: #4cc2a5;
-$color-fail: #fc6766;
+$color-font-weight: #333333;
+$color-font-medium: #666666;
+$color-font-light: #999999;
+$color-success: #52c41a;
+$color-warning: #faad14;
+$color-error: #f5222d;
+$color-strong: #d33443;
+$color-scrollbar-thumb-bg: rgba(193, 193, 193, 0.6);
 
-// 通用样式
-// 全局
+// 样式定义
+// 通用
 @mixin common {
   * {
     box-sizing: border-box;
@@ -50,100 +25,377 @@ $color-fail: #fc6766;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
+    font-family: "Microsoft YaHei", 微软雅黑;
   }
 }
 
-// a标签
-@mixin a-common {
-  a {
-    cursor: pointer;
-    text-decoration: none;
-    border: none;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 255);
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
+// 滚动条
+@mixin common-scroll {
+  *::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
   }
-  a:link,
-  a:hover,
-  a:active,
-  a:visited {
-    text-decoration: none;
+  *::-webkit-scrollbar-track {
+    background-color: $color-white;
   }
-}
-
-// input
-@mixin input-common {
-  input {
-    outline: none;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    -webkit-appearance: none;
+  *::-webkit-scrollbar-thumb {
+    background-color: $color-scrollbar-thumb-bg;
+    border-radius: 50px;
   }
-  input::-ms-clear,
-  input::-ms-reveal {
-    display: none;
+  *::-webkit-scrollbar-corner {
+    background-color: $color-white;
   }
 }
 
-// ul
-@mixin ul-common {
-  ul {
-    list-style: none;
+// 宽度100%
+@mixin w100 {
+  .w100 {
+    width: 100%;
   }
 }
 
-// 通用方法
-// 背景
-/*
- * 背景
- * @param $img 图片目录文件名
- * @param $posX 位置x
- * @param $posY 位置y
- * @param $path 相对目录
- */
-@mixin bg($img, $posX, $posY, $path: "../") {
-  background: url(#{$path}assets/imgs/#{$img}) no-repeat $posX $posY;
+// 高度100%
+@mixin h100 {
+  .h100 {
+    height: 100%;
+  }
 }
 
-/*
- * 背景（背景色）
- * @param $img 图片目录文件名
- * @param $posX 位置x
- * @param $posY 位置y
- * @param $path 相对目录
- */
-@mixin bg-color($color, $img, $posX, $posY, $path: "../") {
-  background: $color url(#{$path}assets/imgs/#{$img}) no-repeat $posX $posY;
-}
-
-// 文本
-/*
- * 文本显示不完显示...
- * @param
- */
+// 文本显示不完显示...
 @mixin text-ellipsis {
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 /*
- * 文本显示不完显示...
- * @param
+ * 文本多行显示不完显示...
+ * @param $rows 最多显示行数
  */
 @mixin texts-ellipsis($rows) {
-  display: -webkit-box;
   box-orient: vertical;
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
+  display: -webkit-box;
   -webkit-line-clamp: #{$rows};
   overflow: hidden;
 }
+
+// flex布局
+@mixin flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+// flex水平布局
+@mixin flex-row {
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+}
+
+// flex垂直布局
+@mixin flex-column {
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+}
+
+// flex主轴居中
+@mixin flex-primary-axis-center {
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+}
+
+// flex主轴从前向后排
+@mixin flex-primary-axis-start {
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  justify-content: flex-start;
+}
+
+// flex主轴从后向前排
+@mixin flex-primary-axis-end {
+  -webkit-box-align: end;
+  -moz-box-align: end;
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  -moz-justify-content: flex-end;
+  justify-content: flex-end;
+}
+
+// flex主轴分居两边
+@mixin flex-primary-axis-between {
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  justify-content: space-between;
+}
+
+// flex主轴分居两边带空隙
+@mixin flex-primary-axis-around {
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  justify-content: space-around;
+}
+
+// flex次轴居中
+@mixin flex-secondary-axis-center {
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+}
+
+// flex次轴从后向前排
+@mixin flex-secondary-axis-end {
+  -webkit-box-pack: end;
+  -moz-box-pack: end;
+  -ms-flex-align: end;
+  -webkit-align-items: flex-end;
+  -moz-align-items: flex-end;
+  align-items: flex-end;
+}
+
+// flex次轴分居两边
+@mixin flex-secondary-axis-between {
+  -webkit-align-items: space-between;
+  -moz-align-items: space-between;
+  align-items: space-between;
+}
+
+// flex换行，第一行在上方
+@mixin flex-wrap {
+  flex-wrap: wrap;
+}
+
+// flex换行，第一行在下方
+@mixin flex-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+// 过渡/动画
+/*
+ * 宽度过渡
+ * @param $duration 完成时间
+ */
+@mixin transition-width($duration) {
+  transition: width #{$duration} ease-in-out;
+  -ms-transition: width #{$duration} ease-in-out;
+  -moz-transition: width #{$duration} ease-in-out;
+  -webkit-transition: width #{$duration} ease-in-out;
+  -o-transition: width #{$duration} ease-in-out;
+}
+
+/*
+ * 淡入
+ * @param $duration 完成时间
+ */
+@mixin fade-in($duration, $delay: 0s) {
+  animation: fade-in #{$duration} ease-in-out $delay both;
+  -moz-animation: fade-in #{$duration} ease-in-out $delay both;
+  -webkit-animation: fade-in #{$duration} ease-in-out $delay both;
+  -o-animation: fade-in #{$duration} ease-in-out $delay both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*
+ * 从小变大 淡入
+ * @param $duration 完成时间
+ */
+@mixin fade-scale-in($duration, $delay: 0s) {
+  animation: fade-scale-in #{$duration} ease-in-out $delay both;
+  -moz-animation: fade-scale-in #{$duration} ease-in-out $delay both;
+  -webkit-animation: fade-scale-in #{$duration} ease-in-out $delay both;
+  -o-animation: fade-scale-in #{$duration} ease-in-out $delay both;
+}
+
+@keyframes fade-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@-moz-keyframes fade-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes fade-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@-o-keyframes fade-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/*
+ * 点点点渐显
+ * @param $duration 完成时间
+ */
+@mixin animate-dot($duration) {
+  animation: dot-move #{$duration} infinite step-start;
+  -moz-animation: dot-move #{$duration} infinite step-start;
+  -webkit-animation: dot-move #{$duration} infinite step-start;
+  -o-animation: dot-move #{$duration} infinite step-start;
+}
+
+@keyframes dot-move {
+  0% {
+    width: 0;
+    margin-right: 1.5em;
+  }
+  33% {
+    width: 0.5em;
+    margin-right: 1em;
+  }
+  66% {
+    width: 1em;
+    margin-right: 0.5em;
+  }
+  100% {
+    width: 1.5em;
+    margin-right: 0;
+  }
+}
+
+@-moz-keyframes dot-move {
+  0% {
+    width: 0;
+    margin-right: 1.5em;
+  }
+  33% {
+    width: 0.5em;
+    margin-right: 1em;
+  }
+  66% {
+    width: 1em;
+    margin-right: 0.5em;
+  }
+  100% {
+    width: 1.5em;
+    margin-right: 0;
+  }
+}
+
+@-webkit-keyframes dot-move {
+  0% {
+    width: 0;
+    margin-right: 1.5em;
+  }
+  33% {
+    width: 0.5em;
+    margin-right: 1em;
+  }
+  66% {
+    width: 1em;
+    margin-right: 0.5em;
+  }
+  100% {
+    width: 1.5em;
+    margin-right: 0;
+  }
+}
+
+@-o-keyframes dot-move {
+  0% {
+    width: 0;
+    margin-right: 1.5em;
+  }
+  33% {
+    width: 0.5em;
+    margin-right: 1em;
+  }
+  66% {
+    width: 1em;
+    margin-right: 0.5em;
+  }
+  100% {
+    width: 1.5em;
+    margin-right: 0;
+  }
+}
+
 /*
  * 滑动动效
  * @param
  *
 */
-@mixin slideX{
+@mixin slideX {
   position: absolute;
   right: 0;
   top: 0;
@@ -157,118 +409,21 @@ $color-fail: #fc6766;
     z-index: 20;
   }
 }
-@mixin slideX-reverse{
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform: translateX(-100%);
-  transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  -moz-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  -webkit-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  -o-transition: all 0.4s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  &.slide-in{
-    transform: translateX(0%);
-    z-index: 20;
+
+// antdv ui
+@mixin ant-collapse-header-background($backgroundColor) {
+  .ant-collapse-header-background {
+    .ant-collapse-header {
+      background-color: #{$backgroundColor} !important;
+    }
   }
 }
-@mixin slideY{
-  opacity: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform: translateY(-100%);
-  transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  -moz-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  -webkit-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  -o-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  &.slide-in{
-    opacity: 1;
-    transform: translateY(0%);
-    z-index: 20;
-  }
-}
-@mixin slideY-reverse{
-  opacity: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform: translateY(100%);
-  transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  -moz-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  -webkit-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  -o-transition: all 0.3s cubic-bezier(0.18, -0.1, 0.04, 1.15);
-  &.slide-in{
-    opacity: 1;
-    transform: translateY(0%);
-    z-index: 20;
-  }
-}
-/* animate.css
-* 一些简单的动效
-*/
-//swing
-@mixin animate-swing($speed){
-  -webkit-transform-origin: top center;
-  transform-origin: top center;
-  -webkit-animation-name: swing;
-  animation-name: swing;
 
-  -webkit-animation-duration: $speed;
-  animation-duration:  $speed;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-@keyframes swing {
-  20% {
-    -webkit-transform: rotate3d(0, 0, 1, 15deg);
-    transform: rotate3d(0, 0, 1, 15deg);
-  }
-
-  40% {
-    -webkit-transform: rotate3d(0, 0, 1, -10deg);
-    transform: rotate3d(0, 0, 1, -10deg);
-  }
-
-  60% {
-    -webkit-transform: rotate3d(0, 0, 1, 5deg);
-    transform: rotate3d(0, 0, 1, 5deg);
-  }
-
-  80% {
-    -webkit-transform: rotate3d(0, 0, 1, -5deg);
-    transform: rotate3d(0, 0, 1, -5deg);
-  }
-
-  to {
-    -webkit-transform: rotate3d(0, 0, 1, 0deg);
-    transform: rotate3d(0, 0, 1, 0deg);
-  }
-}
-//pulse
-@mixin animate-pulse($speed) {
-  -webkit-animation-name: pulse;
-  animation-name: pulse;
-  -webkit-animation-timing-function: ease-in-out;
-  animation-timing-function: ease-in-out;
-
-  -webkit-animation-duration: $speed;
-  animation-duration:  $speed;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-@keyframes pulse {
-  from {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-  }
-
-  50% {
-    -webkit-transform: scale3d(0.9, 0.9, 0.9);
-    transform: scale3d(0.9, 0.9, 0.9);
-  }
-
-  to {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
+@mixin ant-collapse-header-padding-top-bottom($px) {
+  .ant-collapse-header-background {
+    .ant-collapse-header {
+      padding-bottom: #{$px}px !important;
+      padding-top: #{$px}px !important;
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { post } from "network/http";
-import { URL } from "configs/global";
+import { URL } from "constants/global";
 /*
  * 接口定义
  */
@@ -44,10 +44,10 @@ export const GETCODESREGIONGB = `${COMMON}/api/base/baseAreaCode/getAreaCodeList
 export const GETDEPARTMENT = `${COMMON}/api/common/codeValue/search/getDepartmentList`;
 // 查询项目列表
 export const GETPROJECT = `${COMMON}/api/common/codeValue/search/getProjectList`;
+
 /*
  * 接口
  */
-
 // 获取权限菜单
 export async function getPowerFuns(data, params) {
   const res = await post(`${URL}${GETPOWERFUNS}`, data, params);
