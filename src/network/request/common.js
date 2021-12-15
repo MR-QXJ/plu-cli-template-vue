@@ -1,5 +1,5 @@
 import { post } from "network/http";
-import { URL } from "utils/global";
+import { URL } from "configs/global";
 /*
  * 接口定义
  */

@@ -8,11 +8,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 // 注册Element-UI
-import initElement from "utils/use-element";
+import initElement from "configs/use-element";
 Vue.use(initElement);
 
 // 全局注册组件
-import { storageNameUser } from "@/utils/global";
+import { storageNameUser } from "configs/global";
 
 Vue.config.productionTip = false;
 

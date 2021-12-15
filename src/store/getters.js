@@ -1,5 +1,5 @@
 // getter
-import { storageNameNavMenuPKey, storageNameNavMenuKey } from "@/utils/global";
+import { storageNameNavMenuPKey, storageNameNavMenuKey } from "configs/global";
 
 const sys = state => {
   return state._sys;

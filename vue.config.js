@@ -11,7 +11,7 @@ const devNeedCdn = true;
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
-// 打包使用cdn
+// 注入链接
 const cdn = {
   // 已使用cdn的不需要打包
   externals: {
@@ -21,14 +21,15 @@ const cdn = {
     vuex: "Vuex",
     axios: "axios"
   },
-  // cdn的css链接
-  css: [],
-  // cdn的js链接
+  // 注入css链接
+  css: ["./assets/styles/first-screen/loading.css"],
+  // 注入js链接
   js: [
     "https://cdn.bootcss.com/vue/2.6.10/vue.min.js",
     "https://cdn.bootcss.com/vuex/3.0.1/vuex.min.js",
     "https://cdn.bootcss.com/vue-router/3.0.7/vue-router.min.js",
-    "https://cdn.bootcss.com/axios/0.18.0/axios.min.js"
+    "https://cdn.bootcss.com/axios/0.18.0/axios.min.js",
+    "https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"
   ]
 };
 
@@ -51,7 +52,8 @@ module.exports = {
       .set("network", resolve("src/network"))
       .set("request", resolve("src/network/request"))
       .set("components", resolve("src/components"))
-      .set("utils", resolve("src/utils"));
+      .set("utils", resolve("src/utils"))
+      .set("configs", resolve("src/configs"));
 
     config.plugin("html").tap(args => {
       // 生产环境或者本地需要cdn时，才注入cdn

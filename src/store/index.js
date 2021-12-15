@@ -9,7 +9,7 @@ import { actions } from "./actions";
 //   storageNameNavMenuKey,
 //   storageNameFireAlarmId,
 //   storageNameDigitalUnitId
-// } from "@/utils/global";
+// } from "configs/global";
 
 Vue.use(Vuex);
 
@@ -17,7 +17,7 @@ Vue.use(Vuex);
 // 系统信息
 const _sys = {
   // 系统名称
-  sysName: "vue项目基础模板"
+  sysName: "vue项目基础模板-element"
 };
 
 const state = {

@@ -1,12 +1,12 @@
 // 入口页
 <template>
   <div class="h100 w100" id="app">
-    <router-view ref="child" />
+    <router-view />
   </div>
 </template>
 
 <script>
-import { alert } from "utils/tools/feedback";
+import { alert } from "utils/feedback";
 
 export default {
   name: "app",
@@ -15,16 +15,23 @@ export default {
       // 初始显示最小浏览尺寸提示
       showDisplayMinSizeNote: false,
       // 最小浏览尺寸提示框实例
-      displayMsg: null
+      displayMsg: null,
+      // 首屏加载动画关闭延时器
+      firstScreenLoadingCloseT: null
     };
   },
+  mounted() {
+    this.displayMinSize();
+    window.onresize = this.displayMinSize;
+
+    // this.firstScreenLoadingClose();
+  },
+  beforeDestroy() {
+    this.firstScreenLoadingCloseStop();
+  },
   methods: {
-    // 隐藏页面初始化loading
-    hideLoading: function() {
-      document.getElementsByClassName("enter")[0].style.display = "none";
-    },
     // 显示最小浏览尺寸提示
-    displayMinSize: function() {
+    displayMinSize() {
       this.showDisplayMinSizeNote =
         document.body.clientWidth < 1024 || document.body.clientHeight < 600;
       if (this.showDisplayMinSizeNote) {
@@ -36,13 +43,25 @@ export default {
           });
         }
       }
+    },
+    // 延时关闭首屏加载动画
+    firstScreenLoadingClose() {
+      this.firstScreenLoadingCloseT = setTimeout(() => {
+        let firstScreenLoading = document.getElementById("firstScreenLoading");
+        if (firstScreenLoading) {
+          document.body.removeChild(firstScreenLoading);
+          this.firstScreenLoadingCloseStop();
+        }
+        firstScreenLoading = null;
+      }, 1000);
+    },
+    // 延时关闭首屏加载动画停止
+    firstScreenLoadingCloseStop() {
+      if (this.firstScreenLoadingCloseT) {
+        clearTimeout(this.firstScreenLoadingCloseT);
+        this.firstScreenLoadingCloseT = null;
+      }
     }
-  },
-  mounted() {
-    this.displayMinSize();
-    window.onresize = this.displayMinSize;
-
-    this.hideLoading();
   }
 };
 </script>

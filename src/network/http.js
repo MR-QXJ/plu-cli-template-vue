@@ -4,9 +4,9 @@
 import axios from "axios";
 import router from "@/router";
 
-import { storageNameUser } from "utils/global";
-import { dataIsNullNumber } from "utils/tools/common";
-import { message, alert } from "utils/tools/feedback";
+import { storageNameUser } from "configs/global";
+import { dataIsNullNumber } from "utils/common";
+import { message, alert } from "utils/feedback";
 
 // import qs from "qs";
 
