@@ -24,7 +24,7 @@ export default {
     this.displayMinSize();
     window.onresize = this.displayMinSize;
 
-    // this.firstScreenLoadingClose();
+    this.firstScreenLoadingClose();
   },
   beforeDestroy() {
     this.firstScreenLoadingCloseStop();
