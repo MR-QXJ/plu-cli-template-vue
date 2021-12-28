@@ -1,33 +1,27 @@
 <template>
-  <div class="h100 w100 home">
-    欢迎来到<span class="title">He-Cli！！</span>
-    <Echart :chartOpt="o" />
-  </div>
+  <content-wrapper ref="contentWrapper">
+    <template #content>
+      <div class="home h100 w100">
+        欢迎来到<span class="title" @click="show = true">He-Cli！！</span>
+      </div>
+    </template>
+    <template #drawer>
+      <Detail :operateKey="12" :visible="show" @cancel="show = false" />
+    </template>
+  </content-wrapper>
 </template>
 
 <script>
-import Echart from "components/common/chart/Echart";
+import Detail from "components/test/Detail";
+import ContentWrapper from "components/common/layout/ContentWrapper";
 export default {
   components: {
-    Echart
+    Detail,
+    ContentWrapper
   },
   data() {
     return {
-      o: {
-        xAxis: {
-          type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-        },
-        yAxis: {
-          type: "value"
-        },
-        series: [
-          {
-            data: [150, 230, 224, 218, 135, 147, 260],
-            type: "line"
-          }
-        ]
-      }
+      show: false
     };
   }
 };
@@ -35,8 +29,12 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  height: 500px;
-  line-height: 500px;
+  @include flex;
+  @include flex-primary-axis-center;
+  @include flex-secondary-axis-center;
+  overflow: hidden;
+  position: relative;
+
   text-align: center;
   font-size: 30px;
   .title {

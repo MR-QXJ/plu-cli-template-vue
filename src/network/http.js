@@ -44,11 +44,10 @@ axios.interceptors.response.use(
   }
 );
 
+// 处理http状态
 function checkStatus(response) {
-  // 处理http状态
   // 正常状态返回数据
-  const code = response.status;
-  const data = response.data;
+  const { data, status: code } = response;
 
   if (code === 200 || code === 304) {
     return data;
@@ -76,9 +75,9 @@ function checkStatus(response) {
   };
 }
 
+// 统一处理错误信息
 function checkCode(res) {
-  const code = res.code;
-  // 统一处理错误信息
+  const { code } = res;
   if (code !== 0) {
     let msg = `${
       res.message ? res.message.replace(/!/g, "") : "系统繁忙，请稍后再试"
@@ -91,8 +90,8 @@ function checkCode(res) {
       const user = {
         token: null,
         userId: "",
-        userName: "未知用户",
-        realName: "未知姓名",
+        userName: "",
+        userAccount: "",
         avatarImg: ""
       };
       router.push({

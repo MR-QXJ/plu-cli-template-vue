@@ -64,3 +64,11 @@ export const imgModal = {
 //6、请求
 // 超时时间(30秒)
 export const apiTimeout = 30000;
+
+//7、moment时间格式
+// 日期
+export const formatMomentDate = "YYYY-MM-DD";
+// 时间
+export const formatMomentTime = "YYYY-MM-DD HH:mm:ss";
+// 时间省略秒
+export const formatMomentTimeNoSecond = "YYYY-MM-DD HH:mm";

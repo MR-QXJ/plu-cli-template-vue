@@ -4,6 +4,8 @@ import {
   Layout,
   Col,
   Row,
+  Form,
+  Drawer,
   Input,
   Spin,
   Menu,
@@ -19,6 +21,8 @@ import {
 const components = [
   ConfigProvider,
   Layout,
+  Form,
+  Drawer,
   Menu,
   Spin,
   Col,

@@ -4,17 +4,19 @@
 
 import "@babel/polyfill";
 import Vue from "vue";
+import moment from "moment";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-// 注册ant-design-vue
 import initAntd from "configs/use-antd";
-Vue.use(initAntd);
-
 // 全局注册组件
 import { storageNameUser } from "constants/global";
 
+// 注册ant-design-vue
+Vue.use(initAntd);
+
 Vue.config.productionTip = false;
+Vue.prototype.$moment = moment;
 
 // 自定义指令-更改标题
 Vue.directive("title", {

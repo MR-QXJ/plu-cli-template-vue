@@ -101,6 +101,10 @@ body {
   overflow: hidden;
 }
 
+#app {
+  overflow: hidden;
+}
+
 // 设置antdv ui组件额外的主题（antdv ui不支持自定义的样式的组件）
 .ant-layout-header {
   height: 60px;
@@ -280,9 +284,6 @@ body {
   color: $color-font-medium;
 }
 
-#app {
-  overflow: hidden;
-}
 .table-row-value {
   @include text-ellipsis;
   display: block;
